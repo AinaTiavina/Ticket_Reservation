@@ -1,0 +1,11 @@
+{
+  "name": "ticket_reservation",
+  "version": "1.0.0",
+  "description": "API for a ticket reservation in a cinema room",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Poseidon",
+  "license": "ISC"
+}
