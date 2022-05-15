@@ -36,13 +36,4 @@ const Event = db.define('Event', {
     timestamps: false
 });
 
-(async () => {
-    db.sync({alter: true, force: true})
-        .then(() => {
-            console.log('The database was successfully synchronized !!!');
-        })
-        .catch( err => {
-            console.log(err);
-        });    
-})
 module.exports = Event;
