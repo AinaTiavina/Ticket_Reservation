@@ -9,6 +9,7 @@
   "author": "Poseidon",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "sequelize": "^6.19.0"
   }
 }
