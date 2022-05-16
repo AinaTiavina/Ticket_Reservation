@@ -14,28 +14,52 @@ const client = db.define('Client', {
     },
     lastName: {
         type: DataTypes.STRING(40),
-        allowNull: false
+        allowNull: false,
+        validate: {
+            len: [3, 40]
+        }
     },
     FirstName: {
         type: DataTypes.STRING(40),
-        allowNull: false
+        allowNull: false,
+        validate: {
+            len: [3, 40]
+        }
     },
     email: {
         type: DataTypes.STRING(50),
         allowNull: false,
-        unique: true
+        unique: true,
+        validate: {
+            isEmail: {
+                args: true,
+                msg: 'This is an invalid email'
+            }
+        }
     },
     password: {
         type: DataTypes.STRING(180),
-        allowNull: false
+        allowNull: false,
+        validate: {
+            len: [6, 30]
+        }
     },
     phone: {
         type: DataTypes.STRING(10),
-        unique: true
+        unique: true,
+        validate: {
+            len: 10
+        }
     },
     cardNumber: {
         type: DataTypes.STRING(16),
-        unique: true
+        unique: true,
+        validate: {
+            isCreditCard: {
+                args: true,
+                msg: 'Invalid credit card'
+            }
+        }
     }
 });
 
