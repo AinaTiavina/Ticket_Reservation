@@ -14,7 +14,7 @@ module.exports = {
     createEvent: (req, res, next) => {
         
         Event.create({
-            numEvent: "E_"+req.body.dateEvent,
+            numEvent: "E_"+req.body.dateEvent.split('-').join(''),
             title: req.body.title,
             category: req.body.category,
             categoryAge: req.body.categoryAge,
