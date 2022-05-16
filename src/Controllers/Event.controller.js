@@ -36,7 +36,7 @@ module.exports = {
     updateEvent: (req, res, next) => {
         
         const event = {
-            numEvent: "E_"+req.body.dateEvent,
+            numEvent: "E_"+req.body.dateEvent.split('-').join(''),
             title: req.body.title,
             category: req.body.category,
             categoryAge: req.body.categoryAge,
