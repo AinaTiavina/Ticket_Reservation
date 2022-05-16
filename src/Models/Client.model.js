@@ -47,6 +47,7 @@ const client = db.define('Client', {
     phone: {
         type: DataTypes.STRING(10),
         unique: true,
+        allowNull: false,
         validate: {
             len: 10
         }
@@ -54,6 +55,7 @@ const client = db.define('Client', {
     cardNumber: {
         type: DataTypes.STRING(16),
         unique: true,
+        allowNull: false,
         validate: {
             isCreditCard: {
                 args: true,
