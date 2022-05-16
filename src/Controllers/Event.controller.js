@@ -57,5 +57,18 @@ module.exports = {
             message: 'The ressource was updated successfully'
         }))
         .catch( err => res.status(400).json({ err }))
+    },
+
+    deleteEvent: (req, res, next) => {
+
+        Event.destroy({
+            where: {
+                id: req.params.id
+            }
+        })
+        .then( () => res.status(200).json({
+            message: 'The ressource was deleted successfully',
+        }))
+        .catch( err => res.status(400).json({ err }))
     }
 }
