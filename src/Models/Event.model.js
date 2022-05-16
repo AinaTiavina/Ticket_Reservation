@@ -82,11 +82,4 @@ const Event = db.define('Event', {
     timestamps: false
 });
 
-
-
-(async () => {
-    await Event.sync({force: true});
-});
-
-
 module.exports = Event;
