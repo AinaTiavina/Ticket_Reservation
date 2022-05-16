@@ -27,14 +27,10 @@ module.exports = {
 
     getSingleEvent: (req, res, next) => {
         
-        Event.findAll({
-            where: {
-                id: req.params.id
-            },
-            attributes: { exclude: 'id' }
-        })
-        .then( event => res.status(200).json({ event }))
-        .catch( err => res.status(400).json({ err }))
+        Event.findByPk(req.params.id)
+            .then( event => res.status(200).json({ event }))
+            .catch( err => res.status(400).json({ err }))
+        ;
     },
 
     updateEvent: (req, res, next) => {
