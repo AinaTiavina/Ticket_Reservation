@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/events')
-router.post('/events')
-router.get('/event/:id')
-router.put('/event/:id')
-router.delete('/event/:id')
+router.get('/')
+router.post('/')
+router.get('/:id')
+router.put('/:id')
+router.delete('/:id')
 
 module.exports = router;
