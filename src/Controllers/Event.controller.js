@@ -3,6 +3,7 @@ const Event = require('../Models/Event.model');
 module.exports = {
 
     getAllEvents: (req, res, next) => {
+        
         Event.findAll({
             attributes: { exclude: ['id'] }
         })
@@ -11,6 +12,7 @@ module.exports = {
     },
 
     createEvent: (req, res, next) => {
+        
         Event.create({
             numEvent: "E_"+req.body.dateEvent,
             title: req.body.title,
@@ -19,13 +21,19 @@ module.exports = {
             cost: req.body.cost,
             dateEvent: new Date(req.body.dateEvent)
         })
-        .then( event => {
-            return res.status(201).json({event})   
-        })
-        .catch(err => {
-            return res.status(400).json({err});
-        })
+        .then( event => res.status(201).json({event}))   
+        .catch(err => res.status(400).json({err}))
     },
 
-
+    getSingleEvent: (req, res, next) => {
+        
+        Event.findAll({
+            where: {
+                id: req.params.id
+            },
+            attributes: { exclude: 'id' }
+        })
+        .then( event => res.status(200).json({ event }))
+        .catch( err => res.status(400).json({ err }))
+    }
 }
