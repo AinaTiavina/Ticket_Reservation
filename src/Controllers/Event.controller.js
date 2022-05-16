@@ -3,9 +3,11 @@ const Event = require('../Models/Event.model');
 module.exports = {
 
     getAllEvents: (req, res, next) => {
-        Event.findAll()
-            .then( events => res.status(200).json({ events }))
-            .catch( err => res.status(400).json({ err }))
+        Event.findAll({
+            attributes: { exclude: ['id'] }
+        })
+        .then( events => res.status(200).json({ events }))
+        .catch( err => res.status(400).json({ err }))
     },
 
     createEvent: (req, res, next) => {
@@ -23,5 +25,7 @@ module.exports = {
         .catch(err => {
             return res.status(400).json({err});
         })
-    }
+    },
+
+
 }
