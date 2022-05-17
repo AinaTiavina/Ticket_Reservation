@@ -3,7 +3,7 @@ const { Op } = require('sequelize');
 
 module.exports = {
 
-    verifyUserInformation: (req, res, next) => {
+    checkUserDuplication: (req, res, next) => {
         client.findOne({
             where: {
                 [Op.or]: [
