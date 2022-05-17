@@ -48,7 +48,7 @@ module.exports = {
                     }
 
                     const data = {
-                        codeCli: user.codeCli,
+                        id: user.id,
                         email: user.email,
                         roles: user.roles
                     };
