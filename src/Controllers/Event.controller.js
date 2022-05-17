@@ -1,10 +1,10 @@
-const Event = require('../Models/Event.model');
+const { event } = require('../Models')
 
 module.exports = {
 
     getAllEvents: (req, res, next) => {
         
-        Event.findAll({
+        event.findAll({
             attributes: { exclude: 'id' }
         })
         .then( events => res.status(200).json(events))
@@ -13,7 +13,7 @@ module.exports = {
 
     createEvent: (req, res, next) => {
         
-        Event.create({
+        event.create({
             numEvent: "E_"+req.body.dateEvent.split('-').join(''),
             title: req.body.title,
             category: req.body.category,
@@ -27,7 +27,7 @@ module.exports = {
 
     getSingleEvent: (req, res, next) => {
         
-        Event.findByPk(req.params.id)
+        event.findByPk(req.params.id)
             .then( event => res.status(200).json({ event }))
             .catch( err => res.status(400).json({ err }))
         ;
@@ -44,7 +44,7 @@ module.exports = {
             dateEvent: new Date(req.body.dateEvent)    
         };
 
-        Event.update(event, {
+        event.update(event, {
             where: {
                 id: req.params.id
             }
@@ -57,7 +57,7 @@ module.exports = {
 
     deleteEvent: (req, res, next) => {
 
-        Event.destroy({
+        event.destroy({
             where: {
                 id: req.params.id
             }

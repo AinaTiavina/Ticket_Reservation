@@ -1,7 +1,5 @@
 const express = require('express');
-const eventRoutes = require('./src/Routes/Event.routes');
-const clientRoutes = require('./src/Routes/Client.routes');
-const authenticationRoutes = require('./src/Routes/auth.routes');
+const { clientRoutes, eventRoutes, authenticationRoutes } = require('./src/Routes')
 const sequelize = require('./src/Services/database.service');
 const app = express();
 

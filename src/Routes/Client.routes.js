@@ -1,7 +1,7 @@
 const router = require('express').Router();
-const ClientController = require('../Controllers/Client.controller');
+const { clientController } = require('../Controllers');
 
-router.get('/', ClientController.retrieveAllClients);
-router.get('/:id', ClientController.retrieveOneClient);
+router.get('/', clientController.retrieveAllClients);
+router.get('/:id', clientController.retrieveOneClient);
 
 module.exports = router;
