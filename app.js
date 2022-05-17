@@ -5,12 +5,12 @@ const authenticationRoutes = require('./src/Routes/auth.routes');
 const sequelize = require('./src/Services/database.service');
 const app = express();
 
-sequelize.sync()
+sequelize.sync({alter: false, force: false})
     .then(() => {
         console.log('Synchronized successfully');
     })
     .catch(err => {
-        console.log(err);
+        console.log(err.message);
 });
 
 app.use(express.json());

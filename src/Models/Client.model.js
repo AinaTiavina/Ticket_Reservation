@@ -37,6 +37,17 @@ const client = db.define('Client', {
             }
         }
     },
+    roles: {
+        type: DataTypes.JSON,
+        allowNull: false,
+        defaultValue: ['ROLE_USER'],
+        validate: {
+            isIn: {
+                args: [['ROLE_ADMIN', 'ROLE_USER']],
+                msg: 'Undefined value'    
+            }
+        }
+    },
     password: {
         type: DataTypes.STRING(180),
         allowNull: false,
