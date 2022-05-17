@@ -43,7 +43,7 @@ module.exports = {
                 .then( valid => {
                     if(!valid){
                         return res.status(401).json({
-                            message: "Incorrect information."
+                            message: "Invalid password."
                         });
                     }
 
@@ -63,6 +63,6 @@ module.exports = {
                 })
                 .catch( err => res.status(500).json(err) )
         })
-        .catch( err => res.status(500).json(error) )
+        .catch( err => res.status(500).json(err) )
     }
 }
