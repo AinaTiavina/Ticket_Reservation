@@ -4,7 +4,7 @@ const clientRoutes = require('./src/Routes/Client.routes');
 const sequelize = require('./src/Services/database.service');
 const app = express();
 
-sequelize.sync({alter:true})
+sequelize.sync()
     .then(() => {
         console.log('Synchronized successfully');
     })
