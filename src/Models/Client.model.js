@@ -38,9 +38,10 @@ const client = db.define('Client', {
         }
     },
     roles: {
-        type: DataTypes.JSON,
+        type: DataTypes.ENUM,
+        values: ['ADMIN', 'USER'],
         allowNull: false,
-        defaultValue: ['ROLE_USER'],
+        defaultValue: 'USER',
         validate: {
             isIn: {
                 args: [['ADMIN', 'USER']],
@@ -68,10 +69,7 @@ const client = db.define('Client', {
         unique: true,
         allowNull: false,
         validate: {
-            isCreditCard: {
-                args: true,
-                msg: 'Invalid credit card'
-            }
+            len: 16
         }
     }
 });
