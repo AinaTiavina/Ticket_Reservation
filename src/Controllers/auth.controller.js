@@ -47,9 +47,16 @@ module.exports = {
                         });
                     }
 
+                    const data = {
+                        codeCli: user.codeCli,
+                        email: user.email,
+                        roles: user.roles
+                    };
+
                     return res.status(200).json({
                         email: user.email,
-                        token: jwt.sign({ id: user.id }, config.secret, {
+                        roles: user.roles,
+                        token: jwt.sign(data, config.secret, {
                             expiresIn: 10800            // 3 hours
                         })
                     })
