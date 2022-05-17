@@ -7,12 +7,4 @@ const sequelize = new Sequelize(env.DB_NAME, env.DB_USER, env.DB_PASSWORD, {
     dialect: env.DB_DIALECT
 });
 
-sequelize.sync({alter:true})
-    .then(() => {
-        console.log('Synchronized successfully');
-    })
-    .catch(err => {
-        console.log(err);
-    });
-
 module.exports = sequelize;
