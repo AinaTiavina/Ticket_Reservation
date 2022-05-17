@@ -1,11 +1,11 @@
 const express = require('express');
-const eventRouter = require('./src/Router/Event.route');
-const clientRouter = require('./src/Router/Client.route');
+const eventRoutes = require('./src/Routes/Event.routes');
+const clientRoutes = require('./src/Routes/Client.routes');
 const app = express();
 
 app.use(express.json());
 
-app.use('/api/events', eventRouter);
-app.use('/api/clients', clientRouter);
+app.use('/api/events', eventRoutes);
+app.use('/api/clients', clientRoutes);
 
 module.exports = app;
