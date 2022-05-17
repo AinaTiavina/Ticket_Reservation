@@ -10,5 +10,11 @@ module.exports = {
         })
         .then( clients => res.status(200).json(clients))
         .catch( err => res.status(400).json(err))
+    },
+
+    retrieveOneClient: (req, res, next) => {
+        client.findByPk(req.params.id)
+            .then( client => res.status(200).json(client) )
+            .catch( err => res.status(400).json(err) )
     }
 }
