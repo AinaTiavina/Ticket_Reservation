@@ -7,7 +7,7 @@ const client = db.define('Client', {
         primaryKey: true,
         autoIncrement: true
     },
-    codecli: {
+    codeCli: {
         type: DataTypes.STRING(15),
         unique: true,
         allowNull: false
@@ -19,7 +19,7 @@ const client = db.define('Client', {
             len: [3, 40]
         }
     },
-    FirstName: {
+    firstName: {
         type: DataTypes.STRING(40),
         allowNull: false,
         validate: {
@@ -43,7 +43,7 @@ const client = db.define('Client', {
         defaultValue: ['ROLE_USER'],
         validate: {
             isIn: {
-                args: [['ROLE_ADMIN', 'ROLE_USER']],
+                args: [['ADMIN', 'USER']],
                 msg: 'Undefined value'    
             }
         }
@@ -52,7 +52,7 @@ const client = db.define('Client', {
         type: DataTypes.STRING(180),
         allowNull: false,
         validate: {
-            len: [6, 30]
+            len: [6, 180]
         }
     },
     phone: {
