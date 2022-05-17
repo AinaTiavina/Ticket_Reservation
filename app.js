@@ -15,6 +15,6 @@ app.use(express.json());
 
 app.use('/api/events', eventRoutes);
 app.use('/api/clients', clientRoutes);
-app.use('', authenticationRoutes);
+app.use(authenticationRoutes);
 
 module.exports = app;

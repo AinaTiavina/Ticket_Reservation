@@ -72,6 +72,8 @@ const client = db.define('Client', {
             len: 16
         }
     }
+}, {
+    timestamps: false
 });
 
 module.exports = client;
