@@ -11,7 +11,7 @@ module.exports = {
         .then( event => {
             if(!event){
                 return res.status(404).json({
-                    message: 'User not found!'
+                    message: 'User not found. Check your email !!'
                 });
             }
             next();
