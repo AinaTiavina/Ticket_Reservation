@@ -6,7 +6,6 @@ const config = require('../Config/auth.config');
 module.exports = {
 
     register: (req, res, next) => {
-        
         bcrypt.hash(req.body.password, 8)
         .then( hash => {
             client.create({
@@ -14,7 +13,7 @@ module.exports = {
                 lastName: req.body.lastName,
                 firstName: req.body.firstName,
                 email: req.body.email,
-                roles: req.body.roles.split(';'),
+                roles: req.body.roles ? req.body.roles.split(';') : null,
                 password: hash,
                 phone: req.body.phone,
                 cardNumber: req.body.cardNumber
@@ -64,5 +63,5 @@ module.exports = {
                 .catch( err => res.status(500).json(err) )
         })
         .catch( err => res.status(500).json(err) )
-    }
+    },
 }

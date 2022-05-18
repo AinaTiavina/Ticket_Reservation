@@ -22,5 +22,20 @@ module.exports = {
 
             next();
         })
+    },
+
+    checkUserRoles: (req, res, next) => {
+        if(req.body.roles){
+            const roles = req.body.roles.split(';');
+        
+            roles.forEach(element => {
+                if(element !== 'USER' && element !== 'ADMIN'){
+                    return res.status(400).json({
+                        message: 'Roles should contains USER or/and ADMIN value'
+                    })
+                }
+            });
+        }
+        next();
     }
 }
