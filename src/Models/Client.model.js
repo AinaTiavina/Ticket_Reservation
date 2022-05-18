@@ -38,16 +38,9 @@ const client = db.define('Client', {
         }
     },
     roles: {
-        type: DataTypes.ENUM,
-        values: ['ADMIN', 'USER'],
+        type: DataTypes.ARRAY(DataTypes.STRING(10)),
         allowNull: false,
-        defaultValue: 'USER',
-        validate: {
-            isIn: {
-                args: [['ADMIN', 'USER']],
-                msg: 'Undefined value'    
-            }
-        }
+        defaultValue: ['USER'],
     },
     password: {
         type: DataTypes.STRING(180),

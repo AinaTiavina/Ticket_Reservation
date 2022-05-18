@@ -14,7 +14,7 @@ module.exports = {
                 lastName: req.body.lastName,
                 firstName: req.body.firstName,
                 email: req.body.email,
-                roles: req.body.roles,
+                roles: req.body.roles.split(';'),
                 password: hash,
                 phone: req.body.phone,
                 cardNumber: req.body.cardNumber
