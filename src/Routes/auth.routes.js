@@ -16,6 +16,7 @@ router.post(
         verifyClientRegistration.checkUserDuplication,
         verifyClientRegistration.checkUserRoles
     ], 
-    authController.register);
+    authController.register
+);
 
 module.exports = router;
