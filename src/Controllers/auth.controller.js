@@ -13,7 +13,7 @@ module.exports = {
                 lastName: req.body.lastName,
                 firstName: req.body.firstName,
                 email: req.body.email,
-                roles: req.body.roles ? req.body.roles.split(';') : null,
+                roles: req.body.roles ? req.body.roles.split(';') : ['USER'],
                 password: hash,
                 phone: req.body.phone,
                 cardNumber: req.body.cardNumber
