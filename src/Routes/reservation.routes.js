@@ -9,7 +9,8 @@ router.post(
     '/', 
     [
         authorizationJwt.verifyToken,
-        reservationChecking.isPlaceAlreadyBooked
+        reservationChecking.isPlaceAlreadyBooked,
+        reservationChecking.DoesUserReachMaxBookedPlace
     ],
     reservationController.insertReservation
 );
