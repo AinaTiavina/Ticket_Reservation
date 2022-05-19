@@ -1,5 +1,5 @@
 const express = require('express');
-const { clientRoutes, eventRoutes, authenticationRoutes } = require('./src/Routes')
+const { clientRoutes, eventRoutes, authenticationRoutes, reservationRoutes } = require('./src/Routes')
 const sequelize = require('./src/Services/database.service');
 const app = express();
 
@@ -18,6 +18,7 @@ app.use(express.json());
 
 app.use('/api/events', eventRoutes);
 app.use('/api/clients', clientRoutes);
+app.use('/api/reservations', reservationRoutes);
 app.use(authenticationRoutes);
 
 module.exports = app;
