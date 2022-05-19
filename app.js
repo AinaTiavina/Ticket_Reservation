@@ -10,12 +10,8 @@ app.use((req, res, next) => {
     next();
 });
 
-sequelize.sync({alter: false, force: false})
-    .then(() => {
-        console.log('Synchronized successfully');
-    })
-    .catch(err => {
-        console.log(err.message);
+(async () => {
+    sequelize.sync({alter: false, force: false})
 });
 
 app.use(express.json());
