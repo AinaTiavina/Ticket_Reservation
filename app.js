@@ -10,9 +10,7 @@ app.use((req, res, next) => {
     next();
 });
 
-(async () => {
-    sequelize.sync({alter: false, force: false})
-});
+sequelize.sync({alter: false, force: false})
 
 app.use(express.json());
 
