@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const { reservationController } = require("../Controllers");
-const { authorizationJwt } = require("../Middlewares");
+const { authorizationJwt, reservationChecking } = require("../Middlewares");
 
 const router = Router();
 
@@ -8,7 +8,8 @@ router.get('/', reservationController.fetchAllReservations);
 router.post(
     '/', 
     [
-        authorizationJwt.verifyToken
+        authorizationJwt.verifyToken,
+        reservationChecking.isPlaceAlreadyBooked
     ],
     reservationController.insertReservation
 );
