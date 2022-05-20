@@ -18,8 +18,9 @@ module.exports = {
             title: req.body.title,
             category: req.body.category,
             categoryAge: req.body.categoryAge,
-            cost: req.body.cost,
-            dateEvent: new Date(req.body.dateEvent)
+            cost: parseInt(req.body.cost),
+            dateEvent: new Date(req.body.dateEvent),
+            imageUrl: `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`
         })
         .then( event => res.status(201).json(event))   
         .catch(err => res.status(400).json({err}))
