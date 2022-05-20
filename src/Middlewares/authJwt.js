@@ -51,13 +51,13 @@ module.exports = {
                     return res.status(401).json({
                         message: "Your are not able to access this ressource"
                     })
+                }else{
+
+                    next();
                 }
             })
-            .catch( err => {
-                return res.status(500).json({
+            .catch( err => res.status(500).json({
                     message: err.message
-                });
-            });
-        next();    
+            }));   
     }
 }
