@@ -10,6 +10,9 @@ app.use((req, res, next) => {
     next();
 });
 
+// configure a static path
+app.use(express.static(__dirname+'/public'));
+
 sequelize.sync({alter: false, force: false})
 
 app.use(express.json());
