@@ -77,6 +77,16 @@ const Event = db.define('Event', {
             },
             isDate: true
         }
+    },
+    imageUrl: {
+        type: DataTypes.STRING(80),
+        allowNull: false,
+        validate: {
+            notEmpty: {
+                args: true,
+                msg: 'This field cannot be empty'
+            },
+        }
     }
 }, {
     timestamps: false
