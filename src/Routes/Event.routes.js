@@ -15,7 +15,14 @@ router.post(
 );
 
 router.get('/:id', eventController.getSingleEvent);
-router.put('/:id', eventController.updateEvent);
+router.put(
+    '/:id', 
+    [
+        authorizationJwt.verifyToken,
+        authorizationJwt.isAdmin,
+        file.single('img')
+    ], 
+    eventController.updateEvent);
 router.delete('/:id', eventController.deleteEvent);
 
 module.exports = router;
