@@ -1,15 +1,16 @@
 const express = require('express');
 const { eventController } = require('../Controllers');
-const { authorizationJwt } = require('../Middlewares');
+const { authorizationJwt, file } = require('../Middlewares');
 const router = express.Router();
 
 router.get('/', eventController.getAllEvents);
 router.post(
     '/', 
     [
-        authorizationJwt.verifyToken, 
-        authorizationJwt.isAdmin
-    ], 
+        authorizationJwt.verifyToken,
+        authorizationJwt.isAdmin,
+        file.single('img'), 
+    ],
     eventController.createEvent
 );
 
