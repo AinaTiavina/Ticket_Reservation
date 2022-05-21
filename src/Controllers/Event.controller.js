@@ -34,24 +34,48 @@ module.exports = {
             imageUrl: `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`  
         } : {...req.body};
 
-        event.update(newEvent, {
-            where: {
-                id: req.params.id
-            }
-        })
-        .then( find => {
+        event.findByPk(req.params.id)
+        .then( _event => {
+            if(_event){
 
-            if(!find[0]){
+                if(req.file){
+                    const filename = _event.imageUrl.split('/uploads/')[1];
+                    const imagePath = `${__dirname.split('/src')[0]}/public/uploads/${filename}`;
+                    
+                    fs.unlink(imagePath, () => {
+                        event.update(newEvent, {
+                            where: {
+                                id: req.params.id
+                            }
+                        })
+                        .then( () => {
+                    
+                            return res.status(200).json({
+                                message: 'The ressource was updated successfully'
+                            })
+                        })
+                        .catch( err => res.status(400).json({ err }))
+                    });
+                } else{
+                    event.update(newEvent, {
+                        where: {
+                            id: req.params.id
+                        }
+                    })
+                    .then( () => {
+                
+                        return res.status(200).json({
+                            message: 'The ressource was updated successfully'
+                        })
+                    })
+                    .catch( err => res.status(400).json({ err }))
+                }
+            }else{
                 return res.status(404).json({
-                    message: 'Ressource not found.'
+                    message: 'No such Event'
                 });
             }
-
-            return res.status(200).json({
-                message: 'The ressource was updated successfully'
-            })
         })
-        .catch( err => res.status(400).json({ err }))
     },
 
     deleteEvent: (req, res, next) => {
