@@ -10,7 +10,18 @@ const storage = multer.diskStorage({
         const name = file.originalname.split('.')[0];
         const extension = MIME_TYPES[file.mimetype];
         callback(null, name + Date.now() + '.' + extension);
-    }
+    },
 })
 
-module.exports = multer({storage: storage});
+module.exports = multer({
+    storage: storage,
+    fileFilter: (req, file, callback) => {
+
+        if(['jpg', 'jpeg', 'png', 'gif'].includes(file.extname(file.originalname))){
+
+            callback(null, true);
+        }
+
+        callback(new Error('jpg, jpeg, png as well as gif are only allowed'));
+    }
+});
