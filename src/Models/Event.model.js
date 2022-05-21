@@ -12,7 +12,7 @@ const Event = db.define('Event', {
     numEvent: {
         type: DataTypes.VIRTUAL,
         get(){
-            return 'C_' + moment(this.getDataValue('dateEvent')).format('DMMMYYYY');
+            return `E_${moment(this.getDataValue('dateEvent')).format('DMMMYYYY')}`;
         }
     },
     title: {
