@@ -17,11 +17,13 @@ module.exports = multer({
     storage: storage,
     fileFilter: (req, file, callback) => {
 
-        if(['jpg', 'jpeg', 'png', 'gif'].includes(file.extname(file.originalname))){
+        if(['jpg', 'jpeg', 'png', 'gif'].includes(file.originalname.split('.')[1])){
 
             callback(null, true);
+        }else{
+
+            callback(new Error('jpg, jpeg, png as well as gif are only allowed'));
         }
 
-        callback(new Error('jpg, jpeg, png as well as gif are only allowed'));
     }
 });
