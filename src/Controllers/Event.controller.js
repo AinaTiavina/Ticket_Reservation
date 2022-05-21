@@ -1,4 +1,5 @@
 const { event } = require('../Models')
+const fs = require('fs');
 
 module.exports = {
 
@@ -54,15 +55,37 @@ module.exports = {
     },
 
     deleteEvent: (req, res, next) => {
-
-        event.destroy({
-            where: {
-                id: req.params.id
+        
+        event.findByPk(req.params.id)
+        .then( _event => {
+            
+            if(_event){
+                const filename = _event.imageUrl.split('/uploads/')[1];
+                const imagePath = `${__dirname.split('/src')[0]}/public/uploads/${filename}`;
+                
+                fs.unlink(imagePath, () => {
+                    
+                    event.destroy({
+                        where: {
+                            id: req.params.id
+                        }
+                    })
+                    .then( event => {
+                        console.log(event);
+                        return res.status(200).json({
+                            message: 'The ressource was deleted successfully',
+                        })
+                    })
+                    .catch( err => res.status(400).json({ err }))
+                });
+            }else{
+                
+                return res.status(400).json({
+                    message: 'No such event'
+                });
             }
+
         })
-        .then( () => res.status(200).json({
-            message: 'The ressource was deleted successfully',
-        }))
-        .catch( err => res.status(400).json({ err }))
+        .catch( err => res.status(400).json(err));
     }
 }
