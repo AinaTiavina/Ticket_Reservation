@@ -9,15 +9,9 @@ const Event = db.define('Event', {
         allowNull: false
     },
     numEvent: {
-        type: DataTypes.STRING(15),
-        allowNull: false,
-        unique: true,
-        validate: {
-            notEmpty: {
-                args: true,
-                msg: 'This field cannot be empty'
-            },
-            len: 10
+        type: DataTypes.VIRTUAL,
+        get(){
+            return 'C_' + this.getDataValue('dateEvent').toString();
         }
     },
     title: {
