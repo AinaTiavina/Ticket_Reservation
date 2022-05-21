@@ -4,9 +4,7 @@ module.exports = {
 
     getAllEvents: (req, res, next) => {
         
-        event.findAll({
-            attributes: { exclude: 'id' }
-        })
+        event.findAll()
         .then( events => res.status(200).json(events))
         .catch( err => res.status(400).json({ err }))
     },
@@ -14,12 +12,7 @@ module.exports = {
     createEvent: (req, res, next) => {
         
         event.create({
-            numEvent: "E_"+req.body.dateEvent.split('-').join(''),
-            title: req.body.title,
-            category: req.body.category,
-            categoryAge: req.body.categoryAge,
-            cost: parseInt(req.body.cost),
-            dateEvent: new Date(req.body.dateEvent),
+            ...req.body,
             imageUrl: `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`
         })
         .then( event => res.status(201).json(event))   
@@ -35,24 +28,28 @@ module.exports = {
     },
 
     updateEvent: (req, res, next) => {
-        
-        const event = {
-            numEvent: "E_"+req.body.dateEvent.split('-').join(''),
-            title: req.body.title,
-            category: req.body.category,
-            categoryAge: req.body.categoryAge,
-            cost: req.body.cost,
-            dateEvent: new Date(req.body.dateEvent)    
-        };
+        const newEvent = req.file ? {
+            ...req.body,
+            imageUrl: `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`  
+        } : {...req.body};
 
-        event.update(event, {
+        event.update(newEvent, {
             where: {
                 id: req.params.id
             }
         })
-        .then( () => res.status(200).json({
-            message: 'The ressource was updated successfully'
-        }))
+        .then( find => {
+
+            if(!find[0]){
+                return res.status(404).json({
+                    message: 'Ressource not found.'
+                });
+            }
+
+            return res.status(200).json({
+                message: 'The ressource was updated successfully'
+            })
+        })
         .catch( err => res.status(400).json({ err }))
     },
 
