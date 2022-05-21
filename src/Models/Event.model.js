@@ -1,5 +1,6 @@
-const { DataTypes } = require('sequelize')
+const { DataTypes } = require('sequelize');
 const db = require('../Services/database.service');
+const moment = require('moment');
 
 const Event = db.define('Event', {
     id: {
@@ -11,7 +12,7 @@ const Event = db.define('Event', {
     numEvent: {
         type: DataTypes.VIRTUAL,
         get(){
-            return 'C_' + this.getDataValue('dateEvent').toString();
+            return 'C_' + moment(this.getDataValue('dateEvent')).format('DMMMYYYY');
         }
     },
     title: {
@@ -70,6 +71,9 @@ const Event = db.define('Event', {
                 msg: 'This field cannot be empty'
             },
             isDate: true
+        },
+        get(){
+            return moment(this.getDataValue('dateEvent')).format('dddd Do MMMM YYYY');
         }
     },
     imageUrl: {
