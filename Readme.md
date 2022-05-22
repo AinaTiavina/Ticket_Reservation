@@ -9,96 +9,19 @@
 
 ### Routes
 
-<table>
-    <tr>
-        <th>Subjects</th>
-        <th>Paths</th>
-        <th>Methods</th>
-        <th>Description</th>
-        <th>Access</th>
-    </tr>
-
-    <tr>
-        <td rowspan="5">Event</td>
-        <td>/api/events</td>
-        <td>GET</td>
-        <td>Retrieve all events</td>
-        <td></td>
-    </tr>
-
-    <tr>
-        <td>/api/events</td>
-        <td>POST</td>
-        <td>Record an event</td>
-        <td>ADMIN</td>
-    </tr>
-
-    <tr>
-        <td>/api/events/:id</td>
-        <td>GET</td>
-        <td>Get one event with the specified id</td>
-        <td></td>
-    </tr>
-
-    <tr>
-        <td>/api/events/:id</td>
-        <td>PUT</td>
-        <td>Modify an event with the specified id</td>
-        <td>ADMIN</td>    
-    </tr>
-
-    <tr>
-        <td>/api/events/:id</td>
-        <td>DELETE</td>
-        <td>Delete an event with the specified id</td>
-        <td>ADMIN</td>    
-    </tr>
-
-    <tr>
-        <td rowspan="2">Clients</td>
-        <td>/api/clients</td>
-        <td>GET</td>
-        <td>Retrieve all Clients</td>
-        <td>ADMIN</td>
-    </tr>
-
-    <tr>
-        <td>/api/clients/:id</td>
-        <td>GET</td>
-        <td>Get a client who matches the id</td>
-        <td>ADMIN;OWNER</td>
-    </tr>
-
-    <tr>
-        <td rowspan="2">Authentication</td>
-        <td>/login</td>
-        <td>POST</td>
-        <td>Authenticate the user in order to get the token</td>
-        <td></td>
-    </tr>
-
-    <tr>
-        <td>/register</td>
-        <td>POST</td>
-        <td>To subscribe as a member</td>
-        <td></td>
-    </tr>
-
-    <tr>
-        <td rowspan="2">Reservation</td>
-        <td>/api/reservations</td>
-        <td>GET</td>
-        <td>Fetch all reservations.</td>
-        <td>ADMIN,OWNER</td>
-    </tr>
-
-    <tr>
-        <td>/api/reservations?event=:id</td>
-        <td>POST</td>
-        <td>Save a reservation which relates to the specified event</td>
-        <td>USER</td>
-    </tr>
-</table>
+| Subjects | Paths          | Methods  | Description               | Access     |
+|:--------:|:--------------:|:--------:|:-------------------------:|:----------:|
+| *Event*    | `/api/events`    | **GET**      | Retrieve all events      |            |
+|          | `/api/events`    | **POST**     | Record an event           | **ADMIN**      |
+|          | `/api/events/🆔` | **GET**      | Get one event with the specified id |   | 
+|          | `/api/events/🆔` | **PUT**      | Modify an event with the specified id | **ADMIN** |
+|          | `/api/events/🆔` | **DELETE**   | Delete an event with the specified id | **ADMIN** |
+| *Clients*  | `/api/clients`   | **GET**      | Retrieve all Clients      | **ADMIN** |
+|          | `/api/events/🆔` | **GET**      | Get a client who matches the id | **ADMIN,OWNER** |
+| *Authentication* | `/login` | **POST** | Authenticate the user in order to get the token | | 
+|                | `/register` | **POST** | To subscribe as a member |   |
+| *Reservation* | `/api/reservations` | **GET** | Fetch all reservations | **ADMIN;OWNER** |
+|             | `/api/reservations?event=🆔` | **POST** | Save a reservation which relates to the specified event | **USER** |
 
 ### NB: The blank value inside the Access column means that everyone can access the ressources.
 
@@ -106,22 +29,7 @@
     Generally, we use JSON as a response from the server thus all responses are very easy to handle with JS as it is common a JavaScript Object. Whereas, a different data format occurs while we send a request to the server. It depends on the operation that we want to process.
     The Event needs to upload an image file, as a consequence we need to handle it and store its path inside the database. In order to make it successful, we ought to use a different data format called multipart-form-data. It is a suitable format for uploading an image.
 
-<table>
-    <tr>
-        <th>Subjects</th>
-        <th>Methods</th>
-        <th>Data Format</th>
-    </tr>
-
-    <tr>
-        <td>Client, Reservation</td>
-        <td>POST</td>
-        <td>JSON</td>
-    </tr>
-
-    <tr>
-        <td>Event</td>
-        <td>POST/PUT(Creation/Modification)</td>
-        <td>Multipart-form-data</td>
-    </tr>
-</table>
+| Subjects | Methods | Data Format |
+|:--------:|:-------:|:-----------:|
+| *Client, Reservation* | **POST** | ***JSON*** |
+| *Event* | **POST/PUT(Creation/Modification)** | ***multipart/form-data*** | 
