@@ -64,9 +64,9 @@ module.exports = {
     isAccountOwner: (req, res, next) => {
         client.findByPk(req.clientId)
             .then( client => {
-                if(!client.roles.includes('ADMIN') || client.id  !== req.params.id){
+                if(!client.roles.includes('ADMIN') && client.id  !== parseInt(req.params.id)){
                     return res.status(401).json({
-                        message: 'Unable to access this ressource'
+                        message: 'You cannot access this ressource'
                     });
                 }else{
                     next();
