@@ -59,5 +59,19 @@ module.exports = {
             .catch( err => res.status(500).json({
                     message: err.message
             }));   
+    },
+
+    isAccountOwner: (req, res, next) => {
+        client.findByPk(req.clientId)
+            .then( client => {
+                if(!client.roles.includes('ADMIN') || client.id  !== req.params.id){
+                    return res.status(401).json({
+                        message: 'Unable to access this ressource'
+                    });
+                }else{
+                    next();
+                }
+            })
+            .catch( err => res.status(400).json(err));
     }
 }
