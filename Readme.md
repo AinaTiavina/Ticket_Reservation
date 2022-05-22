@@ -20,7 +20,7 @@
 |          | `/api/events/🆔` | **GET**      | Get a client who matches the id | **ADMIN,OWNER** |
 | *Authentication* | `/login` | **POST** | Authenticate the user in order to get the token | | 
 |                | `/register` | **POST** | To subscribe as a member |   |
-| *Reservation* | `/api/reservations` | **GET** | Fetch all reservations | **ADMIN;OWNER** |
+| *Reservation* | `/api/reservations` | **GET** | Fetch all reservations | **ADMIN** |
 |             | `/api/reservations?event=🆔` | **POST** | Save a reservation which relates to the specified event | **USER** |
 
 ### NB: The blank value inside the Access column means that everyone can access the ressources.
