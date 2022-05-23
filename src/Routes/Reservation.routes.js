@@ -21,6 +21,9 @@ router.post(
 );
 router.post(
     '/:id/payment',
+    [
+        authorizationJwt.verifyToken
+    ],
     reservationController.reservationPayment
 )
 
