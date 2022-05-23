@@ -1,6 +1,7 @@
 const { reservation, event, client } = require('../Models');
 const jwt = require('jsonwebtoken');
 const config = require('../Config/auth.config');
+const stripe = require('stripe')('sk_test_51KxrbVHlCnziPo87nWN2cWdMCwyIFpqabSkhvVPetBkjArYhCjTpsRQvdPIrrcrloroVa6WeueKuUkTtXpsgiBOx00HvJojNmG');
 
 module.exports = {
 
@@ -36,5 +37,35 @@ module.exports = {
                 })
             .catch( err => res.status(400).json(err) )
         })
+    },
+
+    reservationPayment: async (req, res, next) => {
+
+        reservation.findByPk(req.params.id)
+            .then( reservation => {
+                event.findByPk(reservation.EventId)
+                .then( _event => {
+                    stripe.checkout.sessions.create({
+                        line_items: [
+                            {
+                                price_data: {
+                                    currency: 'eur',
+                                    product_data: {
+                                        name: _event.title,
+                                    },
+                                    unit_amount: _event.cost,
+                                },
+                                quantity: 1,
+                            },
+                        ],
+                        customer_email: req.clientEmail,
+                        mode: 'payment',
+                        success_url: 'https://example.com/success',
+                        cancel_url: 'https://example.com/cancel',
+                    })
+                    .then( session => res.status(200).json({url: session.url}))
+                    .catch( err => res.status(400).json(err))
+                })
+            })
     }
 }

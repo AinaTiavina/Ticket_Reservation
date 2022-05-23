@@ -62,7 +62,7 @@ module.exports = {
             }));   
     },
 
-    isAccountOwner: (req, res, next) => {
+    isAccountOwnerOrAdmin: (req, res, next) => {
         client.findByPk(req.clientId)
             .then( client => {
                 if(!client.roles.includes('ADMIN') && client.id  !== parseInt(req.params.id)){

@@ -4,7 +4,12 @@ const { authorizationJwt, reservationChecking } = require("../Middlewares");
 
 const router = Router();
 
-router.get('/', reservationController.fetchAllReservations);
+router.get('/',
+    [
+        authorizationJwt.verifyToken,
+        authorizationJwt.isAccountOwnerOrAdmin
+    ],
+    reservationController.fetchAllReservations);
 router.post(
     '/', 
     [
@@ -14,5 +19,12 @@ router.post(
     ],
     reservationController.insertReservation
 );
+router.post(
+    '/:id/payment',
+    [
+        authorizationJwt.verifyToken
+    ],
+    reservationController.reservationPayment
+)
 
 module.exports = router;
