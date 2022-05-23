@@ -19,5 +19,8 @@ router.post(
     ],
     reservationController.insertReservation
 );
+router.post(
+    '/:id/payment'
+)
 
 module.exports = router;
