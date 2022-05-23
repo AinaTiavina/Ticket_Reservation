@@ -58,10 +58,39 @@ module.exports = {
                         token: jwt.sign(data, config.secret, {
                             expiresIn: 10800            // 3 hours
                         })
-                    })
+                    });
                 })
                 .catch( err => res.status(500).json(err) )
         })
         .catch( err => res.status(500).json(err) )
     },
+
+    refreshToken: (req, res, next) => {
+        if(req.clientEmail !== req.body.email){
+            return res.status(401).json({
+                message: "Some information are wrong !!!"
+            });
+        }
+
+        client.findOne({
+            where: {
+                email: req.clientEmail
+            }
+        })
+        .then(client => {
+            const data = {
+                id: client.id,
+                email: client.email,
+                roles: client.roles
+            };
+
+            return res.status(200).json({
+                    email: client.email,
+                    newToken: jwt.sign(data, config.secret, {
+                    expiresIn: 10800            // 3 hours
+                })
+            });
+        })
+        .catch(err => res.status(400).json(err))
+    }
 }

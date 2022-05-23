@@ -21,6 +21,7 @@ module.exports = {
             }
 
             req.clientId = decoded.id;
+            req.clientEmail = decoded.email;
             next();
         });
     },

@@ -22,7 +22,8 @@ router.post(
     '/refreshToken',
     [
         authorizationJwt.verifyToken
-    ]
+    ],
+    authController.refreshToken
 )
 
 module.exports = router;
