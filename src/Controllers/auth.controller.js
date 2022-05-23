@@ -46,16 +46,10 @@ module.exports = {
                         });
                     }
 
-                    const data = {
-                        id: user.id,
-                        email: user.email,
-                        roles: user.roles
-                    };
-
                     return res.status(200).json({
                         email: user.email,
                         roles: user.roles,
-                        token: jwt.sign(data, config.secret, {
+                        token: jwt.sign(config.data(user), config.secret, {
                             expiresIn: 10800            // 3 hours
                         })
                     });
@@ -78,15 +72,10 @@ module.exports = {
             }
         })
         .then(client => {
-            const data = {
-                id: client.id,
-                email: client.email,
-                roles: client.roles
-            };
 
             return res.status(200).json({
                     email: client.email,
-                    newToken: jwt.sign(data, config.secret, {
+                    newToken: jwt.sign(config.data(client), config.secret, {
                     expiresIn: 10800            // 3 hours
                 })
             });
