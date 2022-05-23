@@ -1,7 +1,20 @@
 const router = require('express').Router();
 const { clientController } = require('../Controllers');
+const { authorizationJwt } = require('../Middlewares');
 
-router.get('/', clientController.retrieveAllClients);
-router.get('/:id', clientController.retrieveOneClient);
+router.get(
+    '/', 
+    [
+        authorizationJwt.verifyToken,
+        authorizationJwt.isAdmin
+    ],
+    clientController.retrieveAllClients);
+router.get(
+    '/:id', 
+    [
+        authorizationJwt.verifyToken,
+        authorizationJwt.isAccountOwner
+    ],
+    clientController.retrieveOneClient);
 
 module.exports = router;

@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { authController } = require('../Controllers');
-const { verifyClientRegistration, loginVerification } = require('../Middlewares');
+const { verifyClientRegistration, loginVerification, authorizationJwt } = require('../Middlewares');
 
 router.post(
     '/login', 
@@ -18,5 +18,12 @@ router.post(
     ], 
     authController.register
 );
+router.post(
+    '/refreshToken',
+    [
+        authorizationJwt.verifyToken
+    ],
+    authController.refreshToken
+)
 
 module.exports = router;

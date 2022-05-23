@@ -21,6 +21,7 @@ module.exports = {
             }
 
             req.clientId = decoded.id;
+            req.clientEmail = decoded.email;
             next();
         });
     },
@@ -59,5 +60,19 @@ module.exports = {
             .catch( err => res.status(500).json({
                     message: err.message
             }));   
+    },
+
+    isAccountOwner: (req, res, next) => {
+        client.findByPk(req.clientId)
+            .then( client => {
+                if(!client.roles.includes('ADMIN') && client.id  !== parseInt(req.params.id)){
+                    return res.status(401).json({
+                        message: 'You cannot access this ressource'
+                    });
+                }else{
+                    next();
+                }
+            })
+            .catch( err => res.status(400).json(err));
     }
 }
