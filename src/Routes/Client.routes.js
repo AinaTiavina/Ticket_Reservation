@@ -13,7 +13,7 @@ router.get(
     '/:id', 
     [
         authorizationJwt.verifyToken,
-        authorizationJwt.isAccountOwner
+        authorizationJwt.isAccountOwnerOrAdmin
     ],
     clientController.retrieveOneClient);
 
