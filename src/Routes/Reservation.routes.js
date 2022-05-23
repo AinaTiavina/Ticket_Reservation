@@ -20,7 +20,8 @@ router.post(
     reservationController.insertReservation
 );
 router.post(
-    '/:id/payment'
+    '/:id/payment',
+    reservationController.reservationPayment
 )
 
 module.exports = router;
