@@ -61,7 +61,7 @@ module.exports = {
                                         ],
                                         customer_email: req.clientEmail,
                                         mode: 'payment',
-                                        success_url: 'https://example.com/success',
+                                        success_url: `${req.protocol}://${req.get('host')}/Pages/success.html`,
                                         cancel_url: 'https://example.com/cancel',
                                     });
                     
