@@ -46,26 +46,28 @@ module.exports = {
             .then( reservation => {
                 event.findByPk(reservation.EventId)
                 .then( async _event => {
-                    const session = await stripe.checkout.sessions.create({
-                                        line_items: [
-                                            {
-                                                price_data: {
-                                                    currency: 'eur',
-                                                    product_data: {
-                                                        name: _event.title,
-                                                    },
-                                                    unit_amount: _event.cost,
-                                                },
-                                                quantity: 1,
-                                            },
-                                        ],
-                                        customer_email: req.clientEmail,
-                                        mode: 'payment',
-                                        success_url: `${req.protocol}://${req.get('host')}/Pages/success.html`,
-                                        cancel_url: `${req.protocol}://${req.get('host')}/Pages/failure.html`,
-                                    });
+                    const cardToken = await stripe.tokens.create({
+                        card: {
+                            ...req.body
+                        },
+                    });
                     
-                    return res.status(200).json({url: session.url});
+                    const charge = await stripe.charges.create({
+                        amount: _event.cost*100,
+                        currency: "eur",
+                        source: cardToken.id,
+                        receipt_email: 'rajoelisonainatiavina@gmail.com',
+                        description: `Stripe Charge Of Amount $${_event.cost} for One Time Payment`,
+                    });
+
+                    if (charge.status === "succeeded") {
+                        
+                        return res.status(200).json({ Success: charge });
+                    } else {
+                        return res
+                          .status(400)
+                          .json({ Error: "Something went wrong. Please try again later for One Time Payment" });
+                    }
                 })
             })
     }
