@@ -1,7 +1,8 @@
+require('dotenv').config();
 const { reservation, event, client } = require('../Models');
 const jwt = require('jsonwebtoken');
 const config = require('../Config/auth.config');
-const stripe = require('stripe')('sk_test_51KxrbVHlCnziPo87nWN2cWdMCwyIFpqabSkhvVPetBkjArYhCjTpsRQvdPIrrcrloroVa6WeueKuUkTtXpsgiBOx00HvJojNmG');
+const stripe = require('stripe')(process.env.STRIPE_API_KEY);
 
 module.exports = {
 
