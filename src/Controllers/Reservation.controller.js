@@ -61,12 +61,7 @@ module.exports = {
                     });
 
                     if (charge.status === "succeeded") {
-                        mailer.sendMail({
-                            to: req.clientEmail,
-                            from: 'noreply@gmail.com',
-                            subject: "Ticket ordering",
-                            text: "My first Email"
-                        })
+                        mailer.verify()
                         .then(() => res.status(200).json({msg: "send"}))
                         .catch(err => res.status(500).json(err));
                     } else {
