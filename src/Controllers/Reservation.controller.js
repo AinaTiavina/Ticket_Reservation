@@ -1,6 +1,6 @@
 require('dotenv').config();
 const { reservation, event, client } = require('../Models');
-const jwt = require('jsonwebtoken');
+const mailer = require('../Config/mailer.config');
 const config = require('../Config/auth.config');
 const stripe = require('stripe')(process.env.STRIPE_API_KEY);
 
@@ -46,26 +46,34 @@ module.exports = {
             .then( reservation => {
                 event.findByPk(reservation.EventId)
                 .then( async _event => {
-                    const session = await stripe.checkout.sessions.create({
-                                        line_items: [
-                                            {
-                                                price_data: {
-                                                    currency: 'eur',
-                                                    product_data: {
-                                                        name: _event.title,
-                                                    },
-                                                    unit_amount: _event.cost,
-                                                },
-                                                quantity: 1,
-                                            },
-                                        ],
-                                        customer_email: req.clientEmail,
-                                        mode: 'payment',
-                                        success_url: `${req.protocol}://${req.get('host')}/Pages/success.html`,
-                                        cancel_url: 'https://example.com/cancel',
-                                    });
+                    const cardToken = await stripe.tokens.create({
+                        card: {
+                            ...req.body
+                        },
+                    });
                     
-                    return res.status(200).json({url: session.url});
+                    const charge = await stripe.charges.create({
+                        amount: _event.cost*100,
+                        currency: "eur",
+                        source: cardToken.id,
+                        receipt_email: 'rajoelisonainatiavina@gmail.com',
+                        description: `Stripe Charge Of Amount $${_event.cost} for One Time Payment`,
+                    });
+
+                    if (charge.status === "succeeded") {
+                        mailer.sendMail({
+                            to: req.clientEmail,
+                            from: 'noreply@gmail.com',
+                            subject: "Ticket ordering",
+                            text: "My first Email"
+                        })
+                        .then(() => res.status(200).json({msg: "send"}))
+                        .catch(err => res.status(500).json(err));
+                    } else {
+                        return res
+                          .status(400)
+                          .json({ Error: "Something went wrong. Please try again later for One Time Payment" });
+                    }
                 })
             })
     }

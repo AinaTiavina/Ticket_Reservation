@@ -2,7 +2,7 @@ require('dotenv').config();
 const mailer = require('nodemailer');
 
 const mailerConfig = {
-    host:  process.env.MAILER_HOST,
+    host:  "gmail",
     auth: {
         user: process.env.GMAIL_USERNAME,
         pass: process.env.GMAIL_PASSWORD
