@@ -62,7 +62,8 @@ module.exports = {
 
                     if (charge.status === "succeeded") {
                         sendTicket(req, _event, reservation)
-                        .then(() => res.status(200).json({message: "done"}));
+                        .then(() => res.status(200).json({message: "done"}))
+                        .catch( err => res.status(500).json(err))
                     } else {
                         return res
                           .status(400)
