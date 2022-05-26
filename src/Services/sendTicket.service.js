@@ -6,7 +6,12 @@ const message = async (req, event, reservation) => {
         __dirname.split('src/')[0] + "public/Pages/ticket.twig", 
         { 
             context: {
-                title: "test"
+                title: "test",
+                event_title: event.title,
+                day: event.dateEvent.split(' ')[0],
+                date: `${event.dateEvent.split(' ')[1]} ${event.dateEvent.split(' ')[2]}`,
+                year: `${event.dateEvent.split(' ')[3]}`,
+                category: event.category
             }
         }, 
         (err, html) => {
