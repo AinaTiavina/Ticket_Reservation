@@ -1,6 +1,6 @@
 require('dotenv').config();
 const { reservation, event, client } = require('../Models');
-const mailer = require('../Config/mailer.config');
+const sendTicket = require('../Services/sendTicket.service');
 const config = require('../Config/auth.config');
 const stripe = require('stripe')(process.env.STRIPE_API_KEY);
 
@@ -61,14 +61,9 @@ module.exports = {
                     });
 
                     if (charge.status === "succeeded") {
-                        mailer.sendMail({
-                            to: req.clientEmail,
-                            from: 'noreply@gmail.com',
-                            subject: "Ticket ordering",
-                            text: "My first Email"
-                        })
-                        .then(() => res.status(200).json({msg: "send"}))
-                        .catch(err => res.status(500).json(err));
+                        sendTicket(req, _event, reservation)
+                        .then(() => res.status(200).json({message: "The ticket was sent to your email."}))
+                        .catch( err => res.status(500).json(err))
                     } else {
                         return res
                           .status(400)
