@@ -22,7 +22,8 @@ router.post(
 router.post(
     '/:id/payment',
     [
-        authorizationJwt.verifyToken
+        authorizationJwt.verifyToken,
+        reservationChecking.isAlreadyPayed
     ],
     reservationController.reservationPayment
 )

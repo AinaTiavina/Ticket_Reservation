@@ -17,10 +17,8 @@ module.exports = {
     },
 
     insertReservation: (req, res, next) => {
-        const token = req.headers['authorization'].split(' ')[1];
-
-        jwt.verify(token, config.secret, (err, decoded) => {
-            client.findByPk(decoded.id)
+        
+        client.findByPk(req.clientId)
             .then( user => {
                 event.findByPk(req.query.event)
                     .then( event => {
@@ -37,7 +35,6 @@ module.exports = {
                     }));    
                 })
             .catch( err => res.status(400).json(err) )
-        })
     },
 
     reservationPayment: (req, res, next) => {
