@@ -79,4 +79,4 @@
 
 ### NB: The event entity uses a multipart for data.
 
-### If you have glitch, contact me.
+### If you have a glitch, contact me.
