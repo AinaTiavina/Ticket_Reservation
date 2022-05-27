@@ -24,6 +24,10 @@ const reservation = db.define('Reservation', {
                 msg: 'The value should be less or equal to 255'
             }
         }
+    },
+    payed: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     }
 }, {
     timestamps: true,

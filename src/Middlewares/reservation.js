@@ -1,6 +1,4 @@
-const jwt = require('jsonwebtoken');
 const { Op } = require('sequelize');
-const config = require('../Config/auth.config');
 const { event, reservation } = require('../Models');
 
 module.exports = {
@@ -50,5 +48,19 @@ module.exports = {
             next();
         }))
         .catch( err => res.status(500).json(err))    
+    },
+
+    isAlreadyPayed: (req, res, next) => {
+        reservation.findByPk(req.params.id)
+            .then( _reservation => {
+                if(_reservation && _reservation.payed === true){
+                    return res.status(401).json({
+                        message: "This reservation is already payed"
+                    });
+                }
+
+                next();
+            })
+            .catch(err => res.status(400).json(err))
     }
 }
