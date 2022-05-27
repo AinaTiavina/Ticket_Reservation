@@ -43,8 +43,8 @@ module.exports = {
     reservationPayment: (req, res, next) => {
 
         reservation.findByPk(req.params.id)
-            .then( reservation => {
-                event.findByPk(reservation.EventId)
+            .then( _reservation => {
+                event.findByPk(_reservation.EventId)
                 .then( async _event => {
                     const cardToken = await stripe.tokens.create({
                         card: {
@@ -61,17 +61,24 @@ module.exports = {
                     });
 
                     if (charge.status === "succeeded") {
-                        
-                        sendTicket(req, _event, reservation)
-                        .then(() => res.status(200).json({
-                                message: "The ticket was sent to your email.",
-                                paymentConfirmationUrl: charge.receipt_url
-                            }))
-                        .catch( err => res.status(500).json(err))
+                        await reservation.update({
+                            payed: true
+                        }, {
+                            where: {
+                                id: req.params.id
+                            }
+                        });
+
+                        sendTicket(req, _event, _reservation)
+                            .then(() => res.status(200).json({
+                                    message: "The ticket was sent to your email.",
+                                    paymentConfirmationUrl: charge.receipt_url
+                                }))
+                            .catch( err => res.status(500).json(err))
                     } else {
                         return res
-                          .status(400)
-                          .json({ Error: "Something went wrong. Please try again later for One Time Payment" });
+                            .status(400)
+                            .json({ Error: "Something went wrong. Please try again later for One Time Payment" });
                     }
                 })
             })
