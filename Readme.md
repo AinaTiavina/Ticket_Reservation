@@ -20,8 +20,10 @@
 |          | `/api/events/🆔` | **GET**      | Get a client who matches the id | **ADMIN,OWNER** |
 | *Authentication* | `/login` | **POST** | Authenticate the user in order to get the token | | 
 |                | `/register` | **POST** | To subscribe as a member |   |
+|  | `/refreshToken` | **POST** | To obtain a new token without log in | **USER** |
 | *Reservation* | `/api/reservations` | **GET** | Fetch all reservations | **ADMIN;OWNER** |
-|             | `/api/reservations?event=🆔` | **POST** | Save a reservation which relates to the specified event | **USER** |
+| | `/api/reservations?event=🆔` | **POST** | Save a reservation which relates to the specified event | **USER** |
+| | `/api/reservations/🆔/payment` | **POST** | Pay the reservation | **OWNER** | 
 
 ### NB: The blank value inside the Access column means that everyone can access the ressources.
 
@@ -29,7 +31,52 @@
     Generally, we use JSON as a response from the server thus all responses are very easy to handle with JS as it is common a JavaScript Object. Whereas, a different data format occurs while we send a request to the server. It depends on the operation that we want to process.
     The Event needs to upload an image file, as a consequence we need to handle it and store its path inside the database. In order to make it successful, we ought to use a different data format called multipart-form-data. It is a suitable format for uploading an image.
 
-| Subjects | Methods | Data Format |
-|:--------:|:-------:|:-----------:|
-| *Client, Reservation* | **POST** | ***JSON*** |
-| *Event* | **POST/PUT(Creation/Modification)** | ***multipart/form-data*** | 
+<h2>Client</h2>
+
+### Registration
+
+    {
+        "lastName": "John",
+        "firstName": "Doe",
+        "email": "johnDoe@gmail.com",
+        "password": "password",
+        "phone": "0343434334",
+        "cardNumber": "4242424142424242"
+    }
+
+### Login
+
+    {
+        "email": "johnDoe@gmail.com",
+        "password": "password"
+    }
+
+### Refresh token
+
+    {
+	    "email": "johnDoe@gmail.com"
+    }
+
+<h2>Reservation</h2>
+
+### Book
+
+    {
+	    "placeNumber": "5"
+    }
+
+### Payment
+
+    {
+        "number": 4242424242424242,         // client card Number
+        "exp_month": 2,
+        "exp_year": 2025,
+        "cvc": 123,
+        "address_state": "Madagascar",
+        "address_zip": 101,
+        "name": "John Doe"      // optional
+    }
+
+### NB: The event entity uses a multipart for data.
+
+### If you have glitch, contact me.
