@@ -11,7 +11,8 @@ const message = async (req, event, reservation) => {
                 day: event.dateEvent.split(' ')[0],
                 date: `${event.dateEvent.split(' ')[1]} ${event.dateEvent.split(' ')[2]}`,
                 year: `${event.dateEvent.split(' ')[3]}`,
-                category: event.category
+                category: event.category,
+                reservation_code: reservation.codeReservation
             }
         }, 
         (err, html) => {
