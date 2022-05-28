@@ -16,7 +16,7 @@ module.exports = {
         jwt.verify(token.split(' ')[1], config.secret, (err, decoded) => {
             if(err){
                 return res.status(401).json({
-                    message: 'Invalid or Expired token' 
+                    message: err.message 
                 });
             }
 
