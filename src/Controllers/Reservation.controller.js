@@ -7,11 +7,11 @@ const stripe = require('stripe')(process.env.STRIPE_API_KEY);
 module.exports = {
 
     fetchAllReservations: (req, res, next) => {
-        reservation.findAll({
-            attributes: {
-                exclude: 'id'
-            }
-        })
+        const condition = req.query.isPayed ? {
+            where: { payed: req.query.isPayed }
+        } : {}
+
+        reservation.findAll(condition)
         .then( reservations => res.status(200).json(reservations))
         .catch( err => res.status(500).json(err));
     },
