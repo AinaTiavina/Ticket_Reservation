@@ -21,7 +21,7 @@
 | *Authentication* | `/login` | **POST** | Authenticate the user in order to get the token | | 
 |                | `/register` | **POST** | To subscribe as a member |   |
 |  | `/refreshToken` | **POST** | To obtain a new token without log in | **USER** |
-| *Reservation* | `/api/reservations` | **GET** | Fetch all reservations | **ADMIN;OWNER** |
+| *Reservation* | `/api/reservations?isPayed=true/false(optional)` | **GET** | Fetch all reservations | **ADMIN;OWNER** |
 | | `/api/reservations?event=🆔` | **POST** | Save a reservation which relates to the specified event | **USER** |
 | | `/api/reservations/🆔/payment` | **POST** | Pay the reservation | **OWNER** | 
 
