@@ -3,7 +3,7 @@ const Twig = require('node-twig');
 
 const message = async (req, event, reservation) => {
     Twig.renderFile(
-        __dirname.split('src/')[0] + "public/Pages/ticket.twig", 
+        __dirname.split('src/')[0] + "public/Pages/ticket.html", 
         { 
             context: {
                 title: "test",
@@ -20,7 +20,13 @@ const message = async (req, event, reservation) => {
                 to: req.clientEmail,
                 from: 'noreply@gmail.com',
                 subject: "Ticket ordering",
-                html: html
+                html: html,
+                attachments: [
+                    {
+                        filename: 'Ticket.html',
+                        content: html
+                    }
+                ]
             });
     })
 }
