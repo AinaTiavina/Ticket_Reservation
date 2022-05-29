@@ -2,11 +2,10 @@ require('dotenv').config();
 const mailer = require('nodemailer');
 
 const mailerConfig = {
-    host: "smtp.mailtrap.io",
-    port: 2525,
+    host: process.env.MAILER_HOST,
     auth: {
-        user: "73ea86e1dd630a",
-        pass: "79b9675c4992a1"
+        user: process.env.GMAIL_USERNAME,
+        pass: process.env.GMAIL_PASSWORD
   }
 };
 
