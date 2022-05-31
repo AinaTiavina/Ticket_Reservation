@@ -13,8 +13,7 @@ app.use((req, res, next) => {
 // configure a static path
 app.use(express.static(__dirname+'/public'));
 
-// database synchronization
-sequelize.sync({alter: false, force: false});
+sequelize.sync({alter: false, force: false})
 
 app.use(express.json());
 
