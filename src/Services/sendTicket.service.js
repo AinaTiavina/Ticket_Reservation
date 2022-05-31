@@ -1,5 +1,7 @@
 const mailer = require('../Config/mailer.config');
 const Twig = require('node-twig');
+const pdf = require('html-pdf');
+const options = { format: 'Letter' };
 
 const message = async (req, event, reservation) => {
     Twig.renderFile(
