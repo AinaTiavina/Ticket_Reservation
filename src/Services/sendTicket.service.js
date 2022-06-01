@@ -1,7 +1,12 @@
 const mailer = require('../Config/mailer.config');
 const Twig = require('node-twig');
 const pdf = require('html-pdf');
-const options = { format: 'Letter' };
+const options = { 
+    format: 'Tabloid',
+    directory: __dirname.split('/src')[0],
+    orientation: 'landscape',
+    timeout: 540000 
+};
 
 const message = async (req, event, reservation) => {
     Twig.renderFile(
@@ -18,6 +23,11 @@ const message = async (req, event, reservation) => {
             }
         }, 
         (err, html) => {
+            const pdfPath = __dirname.split('/src')[0] + '/public/Tickets/'
+            + reservation.reservationDate.toString() + '.pdf';
+
+            pdf.create(html, options).toFile(pdfPath);
+
             mailer.sendMail({
                 to: req.clientEmail,
                 from: 'noreply@gmail.com',
@@ -25,8 +35,9 @@ const message = async (req, event, reservation) => {
                 html: html,
                 attachments: [
                     {
-                        filename: 'Ticket.html',
-                        content: html
+                        filename: `Ticket_${reservation.placeNumber}_${reservation.reservationDate.toString()}.pdf`,
+                        path: pdfPath,
+                        contentType: 'application/pdf'
                     }
                 ]
             });
