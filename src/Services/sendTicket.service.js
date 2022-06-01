@@ -23,7 +23,7 @@ const message = async (req, event, reservation) => {
             }
         }, 
         (err, html) => {
-            const pdfPath = __dirname.split('/src')[0] + '/public/tickets/'
+            const pdfPath = __dirname.split('/src')[0] + '/public/Tickets/'
             + reservation.reservationDate.toString() + '.pdf';
 
             pdf.create(html, options).toFile(pdfPath);
