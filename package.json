@@ -23,5 +23,8 @@
     "sequelize": "^6.19.0",
     "stripe": "^9.2.0",
     "twig": "^1.15.4"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.3"
   }
 }
