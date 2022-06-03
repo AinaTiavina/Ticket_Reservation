@@ -1,48 +1,53 @@
+import { NextFunction, Request, Response } from "express";
+import { ConnectionError, Error } from "sequelize/types";
+import Client from "../Types/Client";
+import customReq from "../Types/CustomizedRequest";
+import Event from "../Types/Event";
+import Reservation from "../Types/Reservation";
 require('dotenv').config();
 const { reservation, event, client } = require('../Models');
 const sendTicket = require('../Services/sendTicket.service');
-const config = require('../Config/auth.config');
 const stripe = require('stripe')(process.env.STRIPE_API_KEY);
 
 module.exports = {
 
-    fetchAllReservations: (req, res, next) => {
+    fetchAllReservations: (req: Request, res: Response, next: NextFunction) => {
         const condition = req.query.isPayed ? {
             where: { payed: req.query.isPayed }
         } : {}
 
         reservation.findAll(condition)
-        .then( reservations => res.status(200).json(reservations))
-        .catch( err => res.status(500).json(err));
+        .then( (reservations: Reservation): Response => res.status(200).json(reservations))
+        .catch( (err: ConnectionError) => res.status(500).json(err));
     },
 
-    insertReservation: (req, res, next) => {
+    insertReservation: (req: customReq, res: Response, next: NextFunction) => {
         
         client.findByPk(req.clientId)
-            .then( user => {
-                event.findByPk(req.query.event)
-                    .then( event => {
+            .then( (user: Client): void => {
+                event.findByPk(req.req.query.event)
+                    .then( (event: Event): void => {
                         reservation.create({
-                            placeNumber: req.body.placeNumber,
+                            placeNumber: req.req.body.placeNumber,
                             ClientId: user.id,
                             EventId: event.id
                         })
-                        .then( reservation => res.status(201).json(reservation) )
-                        .catch( err => res.status(400).json(err) );
+                        .then( (reservation: Reservation): Response => res.status(201).json(reservation) )
+                        .catch( (err: ConnectionError): Response => res.status(400).json(err) );
                     })
-                    .catch( () => res.status(400).json({
+                    .catch( (): Response => res.status(400).json({
                         message: 'Event not found.'
                     }));    
                 })
-            .catch( err => res.status(400).json(err) )
+            .catch( (err: TypeError): Response => res.status(400).json(err) )
     },
 
-    reservationPayment: (req, res, next) => {
+    reservationPayment: (req: Request, res: Response, next: NextFunction) => {
 
         reservation.findByPk(req.params.id)
-            .then( _reservation => {
+            .then( (_reservation: Reservation): void => {
                 event.findByPk(_reservation.EventId)
-                .then( async _event => {
+                .then( async (_event: Event) => {
                     const cardToken = await stripe.tokens.create({
                         card: {
                             ...req.body
@@ -71,7 +76,7 @@ module.exports = {
                                     message: "The ticket was sent to your email.",
                                     paymentConfirmationUrl: charge.receipt_url
                                 }))
-                            .catch( err => res.status(500).json(err))
+                            .catch( (err: Error): Response  => res.status(500).json(err))
                     } else {
                         return res
                             .status(400)

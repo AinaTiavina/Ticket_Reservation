@@ -1,4 +1,4 @@
-interface Client {
+type Client = {
     id: number,
     codecli: string,
     lastName: string,

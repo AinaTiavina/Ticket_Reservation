@@ -1,4 +1,4 @@
-interface Event {
+type Event = {
     id: number,
     numEvent: string,
     title: string,
