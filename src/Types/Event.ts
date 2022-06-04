@@ -1,4 +1,4 @@
-type Event = {
+export type Event = {
     id: number,
     numEvent: string,
     title: string,
@@ -8,5 +8,3 @@ type Event = {
     dateEvent: string,
     imageUrl: string
 }
-
-export default Event;

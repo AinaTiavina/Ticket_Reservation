@@ -1,4 +1,4 @@
-type Client = {
+export type Client = {
     id: number,
     codecli: string,
     lastName: string,
@@ -9,5 +9,3 @@ type Client = {
     phone: string,
     cardNumber: string
 }
-
-export default Client;

@@ -1,4 +1,4 @@
-type Reservation = {
+export type Reservation = {
     id: number,
     codeReservation: string,
     placeNumber: string,
@@ -7,5 +7,3 @@ type Reservation = {
     EventId: number
     reservationDate: string
 }
-
-export default Reservation;
