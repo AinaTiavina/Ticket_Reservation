@@ -1,10 +1,7 @@
+require('dotenv').config();
 import { NextFunction, Request, Response } from "express";
 import { ConnectionError, Error } from "sequelize/types";
-import Client from "../Types/Client";
-import customReq from "../Types/CustomizedRequest";
-import Event from "../Types/Event";
-import Reservation from "../Types/Reservation";
-require('dotenv').config();
+import { Reservation, Client, Event } from "../Types";
 const { reservation, event, client } = require('../Models');
 const sendTicket = require('../Services/sendTicket.service');
 const stripe = require('stripe')(process.env.STRIPE_API_KEY);
@@ -21,14 +18,14 @@ module.exports = {
         .catch( (err: ConnectionError) => res.status(500).json(err));
     },
 
-    insertReservation: (req: customReq, res: Response, next: NextFunction) => {
+    insertReservation: (req: Request, res: Response, next: NextFunction) => {
         
-        client.findByPk(req.clientId)
+        client.findByPk((req as any).clientId)
             .then( (user: Client): void => {
-                event.findByPk(req.req.query.event)
+                event.findByPk(req.query.event)
                     .then( (event: Event): void => {
                         reservation.create({
-                            placeNumber: req.req.body.placeNumber,
+                            placeNumber: req.body.placeNumber,
                             ClientId: user.id,
                             EventId: event.id
                         })
