@@ -1,7 +1,9 @@
-const db = require('../Services/database.service');
-const { DataTypes } = require('sequelize');
+import { Sequelize } from "sequelize/types";
 
-const client = db.define('Client', {
+const db: Sequelize = require('../Services/database.service');
+import { DataTypes } from 'sequelize';
+
+export const client = db.define('Client', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -31,10 +33,7 @@ const client = db.define('Client', {
         allowNull: false,
         unique: true,
         validate: {
-            isEmail: {
-                args: true,
-                msg: 'This is an invalid email'
-            }
+            isEmail: true
         }
     },
     roles: {
@@ -54,7 +53,7 @@ const client = db.define('Client', {
         unique: true,
         allowNull: false,
         validate: {
-            len: 10
+            len: [10, 10]
         }
     },
     cardNumber: {
@@ -62,11 +61,9 @@ const client = db.define('Client', {
         unique: true,
         allowNull: false,
         validate: {
-            len: 16
+            len: [16, 16]
         }
     }
 }, {
     timestamps: false
 });
-
-module.exports = client;

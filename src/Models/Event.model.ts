@@ -1,8 +1,8 @@
-const { DataTypes } = require('sequelize');
-const db = require('../Services/database.service');
-const moment = require('moment');
+import { DataTypes, Sequelize } from 'sequelize';
+const db: Sequelize = require('../Services/database.service');
+import moment from 'moment';
 
-const Event = db.define('Event', {
+export const event = db.define('Event', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -19,10 +19,7 @@ const Event = db.define('Event', {
         type: DataTypes.STRING(35),
         allowNull: false,
         validate: {
-            notEmpty: {
-                args: true,
-                msg: 'This field cannot be empty'
-            },
+            notEmpty: true,
             len: [2, 35]
         }
     },
@@ -30,10 +27,7 @@ const Event = db.define('Event', {
         type: DataTypes.STRING(25),
         allowNull: false,
         validate: {
-            notEmpty: {
-                args: true,
-                msg: 'This field cannot be empty'
-            },
+            notEmpty: true,
             len: [3, 25]
         }
     },
@@ -41,10 +35,7 @@ const Event = db.define('Event', {
         type: DataTypes.STRING(15),
         allowNull: false,
         validate: {
-            notEmpty: {
-                args: true,
-                msg: 'This field cannot be empty'
-            },
+            notEmpty: true,
             isIn: {
                 args: [['Toutes', 'Enfant', 'Adolescent', 'Adulte']],
                 msg: 'The value should be one of this (Toutes, Enfant, Adolescent, Adulte)', 
@@ -55,10 +46,7 @@ const Event = db.define('Event', {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
-            notEmpty: {
-                args: true,
-                msg: 'This field cannot be empty'
-            },
+            notEmpty: true,
             isInt: true
         }
     },
@@ -66,10 +54,7 @@ const Event = db.define('Event', {
         type: DataTypes.DATE,
         allowNull: false,
         validate: {
-            notEmpty: {
-                args: true,
-                msg: 'This field cannot be empty'
-            },
+            notEmpty: true,
             isDate: true
         },
         get(){
@@ -80,14 +65,9 @@ const Event = db.define('Event', {
         type: DataTypes.STRING(80),
         allowNull: false,
         validate: {
-            notEmpty: {
-                args: true,
-                msg: 'This field cannot be empty'
-            },
+            notEmpty: true
         }
     }
 }, {
     timestamps: false
 });
-
-module.exports = Event;
