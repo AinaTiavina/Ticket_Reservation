@@ -1,4 +1,7 @@
-const mailer = require('../Config/mailer.config');
+import { Request } from "express";
+import { Event, Reservation } from "../Types";
+
+const mailer: any = require('../Config/mailer.config');
 const Twig = require('node-twig');
 const pdf = require('html-pdf');
 const options = { 
@@ -8,7 +11,7 @@ const options = {
     timeout: 540000 
 };
 
-const message = async (req, event, reservation) => {
+const message = async (req: Request, event: Event, reservation: Reservation) => {
     Twig.renderFile(
         __dirname.split('src/')[0] + "public/Pages/ticket.html", 
         { 
@@ -22,12 +25,12 @@ const message = async (req, event, reservation) => {
                 reservation_code: reservation.codeReservation
             }
         }, 
-        (err, html) => {
+        (err: any, html: string) => {
             const pdfPath = `${__dirname.split('/src')[0]}/public/tickets/${reservation.reservationDate.toString()}.pdf`;
 
             pdf.create(html, options).toFile(pdfPath, () => {
                 mailer.sendMail({
-                    to: req.clientEmail,
+                    to: (req as any).clientEmail,
                     from: 'noreply@gmail.com',
                     subject: "Ticket ordering",
                     html: html,
