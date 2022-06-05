@@ -1,44 +1,47 @@
+import { NextFunction, Request, Response } from "express";
+import { Event } from "../Types";
+
 const { event } = require('../Models')
 const fs = require('fs');
 
 module.exports = {
 
-    getAllEvents: (req, res, next) => {
+    getAllEvents: (req: Request, res: Response, next: NextFunction) => {
         
         event.findAll()
-        .then( events => res.status(200).json(events))
-        .catch( err => res.status(400).json({ err }))
+        .then( (events: Event): Response => res.status(200).json(events))
+        .catch( (err: any): Response => res.status(400).json({ err }))
     },
 
-    createEvent: (req, res, next) => {
+    createEvent: (req: Request, res: Response, next: NextFunction) => {
         
         event.create({
             ...req.body,
-            imageUrl: `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`
+            imageUrl: `${req.protocol}://${req.get('host')}/uploads/${(req as any).file.filename}`
         })
-        .then( event => res.status(201).json(event))   
-        .catch(err => res.status(400).json({err}))
+        .then( (event: Event): Response => res.status(201).json(event))   
+        .catch( (err: any): Response => res.status(400).json({err}))
     },
 
-    getSingleEvent: (req, res, next) => {
+    getSingleEvent: (req: Request, res: Response, next: NextFunction) => {
         
         event.findByPk(req.params.id)
-            .then( event => res.status(200).json({ event }))
-            .catch( err => res.status(400).json({ err }))
+            .then( (event: Event): Response => res.status(200).json({ event }))
+            .catch( (err: any): Response => res.status(400).json({ err }))
         ;
     },
 
-    updateEvent: (req, res, next) => {
-        const newEvent = req.file ? {
+    updateEvent: (req: Request, res: Response, next: NextFunction) => {
+        const newEvent = (req as any).file ? {
             ...req.body,
-            imageUrl: `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`  
+            imageUrl: `${req.protocol}://${req.get('host')}/uploads/${(req as any).file.filename}`  
         } : {...req.body};
 
         event.findByPk(req.params.id)
-        .then( _event => {
+        .then( (_event: Event): void | Response => {
             if(_event){
 
-                if(req.file){
+                if((req as any).file){
                     const filename = _event.imageUrl.split('/uploads/')[1];
                     const imagePath = `${__dirname.split('/src')[0]}/public/uploads/${filename}`;
                     
@@ -48,13 +51,13 @@ module.exports = {
                                 id: req.params.id
                             }
                         })
-                        .then( () => {
+                        .then( (): Response => {
                     
                             return res.status(200).json({
                                 message: 'The ressource was updated successfully'
                             })
                         })
-                        .catch( err => res.status(400).json({ err }))
+                        .catch( (err: any): Response => res.status(400).json({ err }))
                     });
                 } else{
                     event.update(newEvent, {
@@ -62,13 +65,13 @@ module.exports = {
                             id: req.params.id
                         }
                     })
-                    .then( () => {
+                    .then( (): Response => {
                 
                         return res.status(200).json({
                             message: 'The ressource was updated successfully'
                         })
                     })
-                    .catch( err => res.status(400).json({ err }))
+                    .catch( (err: any): Response => res.status(400).json({ err }))
                 }
             }else{
                 return res.status(404).json({
@@ -78,10 +81,10 @@ module.exports = {
         })
     },
 
-    deleteEvent: (req, res, next) => {
+    deleteEvent: (req: Request, res: Response, next: NextFunction) => {
         
         event.findByPk(req.params.id)
-        .then( _event => {
+        .then( (_event: Event): void | Response => {
             
             if(_event){
                 const filename = _event.imageUrl.split('/uploads/')[1];
@@ -94,13 +97,13 @@ module.exports = {
                             id: req.params.id
                         }
                     })
-                    .then( event => {
+                    .then( (event: Event) => {
                         console.log(event);
                         return res.status(200).json({
                             message: 'The ressource was deleted successfully',
                         })
                     })
-                    .catch( err => res.status(400).json({ err }))
+                    .catch( (err: any): Response => res.status(400).json({ err }))
                 });
             }else{
                 
@@ -110,6 +113,6 @@ module.exports = {
             }
 
         })
-        .catch( err => res.status(400).json(err));
+        .catch( (err: any): Response => res.status(400).json(err));
     }
 }

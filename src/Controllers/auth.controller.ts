@@ -1,13 +1,16 @@
-const client = require('../Models/Client.model');
+import { NextFunction, Request, Response } from "express";
+import { Client } from "../Types";
+
+const { client } = require('../Models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const config = require('../Config/auth.config');
 
 module.exports = {
 
-    register: (req, res, next) => {
+    register: (req: Request, res: Response, next: NextFunction) => {
         bcrypt.hash(req.body.password, 8)
-        .then( hash => {
+        .then( (hash: string): void => {
             client.create({
                 codeCli: "C_"+req.body.phone,
                 lastName: req.body.lastName,
@@ -18,28 +21,28 @@ module.exports = {
                 phone: req.body.phone,
                 cardNumber: req.body.cardNumber
             })
-            .then( () => res.status(201).json({
+            .then( (): Response => res.status(201).json({
                 message: 'The client was registered successfully.'
             }))
-            .catch( err => res.status(400).json({
+            .catch( (err: any): Response => res.status(400).json({
                 error: err
             }))
         })
-        .catch( err => res.status(500).json({
+        .catch( (err: any): Response => res.status(500).json({
             error: err.message
         }));
     },
 
-    authentication: (req, res, next) => {
+    authentication: (req: Request, res: Response, next: NextFunction) => {
         
         client.findOne({
             where: {
                 email: req.body.email
             }
         })
-        .then( user => {
+        .then( (user: Client): void => {
             bcrypt.compare(req.body.password, user.password)
-                .then( valid => {
+                .then( (valid: boolean): Response => {
                     if(!valid){
                         return res.status(401).json({
                             message: "Invalid password."
@@ -54,13 +57,13 @@ module.exports = {
                         })
                     });
                 })
-                .catch( err => res.status(500).json(err) )
+                .catch( (err: any): Response => res.status(500).json(err) )
         })
-        .catch( err => res.status(500).json(err) )
+        .catch( (err: any): Response => res.status(500).json(err) )
     },
 
-    refreshToken: (req, res, next) => {
-        if(req.clientEmail !== req.body.email){
+    refreshToken: (req: Request, res: Response, next: NextFunction) => {
+        if( (req as any).clientEmail !== req.body.email){
             return res.status(401).json({
                 message: "Some information are wrong !!!"
             });
@@ -68,10 +71,10 @@ module.exports = {
 
         client.findOne({
             where: {
-                email: req.clientEmail
+                email: (req as any).clientEmail
             }
         })
-        .then(client => {
+        .then( (client: Client): Response => {
 
             return res.status(200).json({
                     email: client.email,
@@ -80,6 +83,6 @@ module.exports = {
                 })
             });
         })
-        .catch(err => res.status(400).json(err))
+        .catch( (err: any): Response => res.status(400).json(err))
     }
 }
