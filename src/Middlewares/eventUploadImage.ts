@@ -1,17 +1,15 @@
 import { Request } from "express";
 
 const multer = require('multer');
-const MIME_TYPES = require('../Config/multer.config');
 const path = require('path');
 
 const storage = multer.diskStorage({
     destination: (req: Request, file: any, callback: CallableFunction) => {
         callback(null, path.join(__dirname, '../../public/uploads/'));
     },
-    filename: (req: Request, file: any, callback: CallableFunction) => {
+    filename: (req: any, file: { originalname: string; mimetype: string | number; }, callback: (arg0: null, arg1: string) => void) => {
         const name = file.originalname.split('.')[0];
-        const extension = MIME_TYPES[file.mimetype];
-        callback(null, name + Date.now() + '.' + extension);
+        callback(null, name + Date.now() + '.' + file.originalname.split('.')[1]);
     },
 })
 
