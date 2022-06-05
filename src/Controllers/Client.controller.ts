@@ -3,7 +3,7 @@ import { Client } from "../Types";
 
 const { client } = require('../Models');
 
-module.exports = {
+export const clientController = {
 
     retrieveAllClients: (req: Request, res: Response, next: NextFunction) => {
         client.findAll({

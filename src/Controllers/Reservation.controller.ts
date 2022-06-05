@@ -6,7 +6,7 @@ const { reservation, event, client } = require('../Models');
 const sendTicket = require('../Services/sendTicket.service');
 const stripe = require('stripe')(process.env.STRIPE_API_KEY);
 
-module.exports = {
+export const reservationController = {
 
     fetchAllReservations: (req: Request, res: Response, next: NextFunction) => {
         const condition = req.query.isPayed ? {

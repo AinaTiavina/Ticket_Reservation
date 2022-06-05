@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { authController } = require('../Controllers');
+import { authController } from "../Controllers";
 const { verifyClientRegistration, loginVerification, authorizationJwt } = require('../Middlewares');
 
 router.post(
@@ -16,7 +16,7 @@ router.post(
         verifyClientRegistration.checkUserDuplication,
         verifyClientRegistration.checkUserRoles
     ], 
-    authController.register
+    
 );
 router.post(
     '/refreshToken',

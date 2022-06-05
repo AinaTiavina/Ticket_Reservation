@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const config = require('../Config/auth.config');
 
-module.exports = {
+export const authController = {
 
     register: (req: Request, res: Response, next: NextFunction) => {
         bcrypt.hash(req.body.password, 8)

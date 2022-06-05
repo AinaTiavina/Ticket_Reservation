@@ -4,7 +4,7 @@ import { Event } from "../Types";
 const { event } = require('../Models')
 const fs = require('fs');
 
-module.exports = {
+export const eventController = {
 
     getAllEvents: (req: Request, res: Response, next: NextFunction) => {
         
