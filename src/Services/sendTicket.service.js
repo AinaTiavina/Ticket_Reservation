@@ -25,20 +25,20 @@ const message = async (req, event, reservation) => {
         (err, html) => {
             const pdfPath = `${__dirname.split('/src')[0]}/public/tickets/${reservation.reservationDate.toString()}.pdf`;
 
-            pdf.create(html, options).toFile(pdfPath);
-
-            mailer.sendMail({
-                to: req.clientEmail,
-                from: 'noreply@gmail.com',
-                subject: "Ticket ordering",
-                html: html,
-                attachments: [
-                    {
-                        filename: `Ticket_${reservation.placeNumber}_${reservation.reservationDate.toString()}.pdf`,
-                        path: pdfPath,
-                        contentType: 'application/pdf'
-                    }
-                ]
+            pdf.create(html, options).toFile(pdfPath, () => {
+                mailer.sendMail({
+                    to: req.clientEmail,
+                    from: 'noreply@gmail.com',
+                    subject: "Ticket ordering",
+                    html: html,
+                    attachments: [
+                        {
+                            filename: `Ticket_${reservation.placeNumber}_${reservation.reservationDate.toString()}.pdf`,
+                            path: pdfPath,
+                            contentType: 'application/pdf'
+                        }
+                    ]
+                });
             });
     })
 }
