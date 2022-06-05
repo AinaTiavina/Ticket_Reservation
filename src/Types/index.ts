@@ -14,7 +14,7 @@ export interface Client {
     lastName: string,
     firstName: string,
     email: string,
-    roles: string | string[],
+    roles: string[],
     password: string,
     phone: string,
     cardNumber: string
