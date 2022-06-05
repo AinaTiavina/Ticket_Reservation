@@ -1,7 +1,12 @@
 require('dotenv').config();
 const mailer = require('nodemailer');
 
-const mailerConfig = {
+const mailerConfig: {
+    host: string | undefined, auth: {
+        user: string | undefined,
+        pass: string | undefined
+    }
+} = {
     host: process.env.MAILER_HOST,
     auth: {
         user: process.env.GMAIL_USERNAME,
