@@ -1,11 +1,14 @@
+import { NextFunction, Request, Response } from "express";
+import { Event, Reservation } from "../Types";
+
 const { Op } = require('sequelize');
 const { event, reservation } = require('../Models');
 
-module.exports = {
+export const reservationChecking = {
 
-    isPlaceAlreadyBooked: (req, res, next) => {
+    isPlaceAlreadyBooked: (req: Request, res: Response, next: NextFunction) => {
         event.findByPk(req.query.event)
-            .then(event => {
+            .then( (event: Event): void => {
                 reservation.findOne({
                     where: {
                         [Op.and]: {
@@ -14,7 +17,7 @@ module.exports = {
                         }
                     }
                 })
-                .then( reservation => {
+                .then( (reservation: Reservation): Response | void => {
 
                     if(reservation){
                         return res.status(400).json({
@@ -24,22 +27,22 @@ module.exports = {
                         next();
                     }
                 })
-                .catch( err => res.status(500).json(err))
+                .catch( (err: any): Response => res.status(500).json(err))
             })
-            .catch( err => res.status(400).json(err));       
+            .catch( (err: any): Response => res.status(400).json(err));       
     },
 
-    doesUserReachMaxBookedPlace: (req, res, next) => {
+    doesUserReachMaxBookedPlace: (req: Request, res: Response, next: NextFunction) => {
 
         reservation.findAndCountAll({
             where: {
                 [Op.and]: {
-                    ClientId: req.clientId,
-                    EventId: parseInt(req.query.event)
+                    ClientId: (req as any).clientId,
+                    EventId: parseInt(req.query.event as string)
                 }
             }
         })
-        .then( (result => {        
+        .then( ( (result: any): Response | void => {        
                 
             if(result.count === 5) return res.status(401).json({
                 message: "You cannot book places over than 5 in a single event."
@@ -47,12 +50,12 @@ module.exports = {
 
             next();
         }))
-        .catch( err => res.status(500).json(err))    
+        .catch( (err: any): Response => res.status(500).json(err))    
     },
 
-    isAlreadyPayed: (req, res, next) => {
+    isAlreadyPayed: (req: Request, res: Response, next: NextFunction) => {
         reservation.findByPk(req.params.id)
-            .then( _reservation => {
+            .then( (_reservation: Reservation): Response | void => {
                 if(_reservation && _reservation.payed === true){
                     return res.status(401).json({
                         message: "This reservation is already payed"
@@ -61,6 +64,6 @@ module.exports = {
 
                 next();
             })
-            .catch(err => res.status(400).json(err))
+            .catch((err: any): Response => res.status(400).json(err))
     }
 }

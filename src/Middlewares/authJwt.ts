@@ -1,10 +1,13 @@
+import { NextFunction, Request, response, Response } from "express";
+import { Client } from "../Types";
+
 const jwt = require('jsonwebtoken');
 const config = require('../Config/auth.config');
 const { client } = require('../Models');
 
-module.exports = {
+export const authorizationJwt = {
 
-    verifyToken: (req, res, next) => {
+    verifyToken: (req: Request, res: Response, next: NextFunction) => {
 
         const token = req.headers['authorization'];
         if(!token){
@@ -13,22 +16,22 @@ module.exports = {
             });
         }
 
-        jwt.verify(token.split(' ')[1], config.secret, (err, decoded) => {
+        jwt.verify(token.split(' ')[1], config.secret, (err: any, decoded: any) => {
             if(err){
                 return res.status(401).json({
                     message: err.message 
                 });
             }
 
-            req.clientId = decoded.id;
-            req.clientEmail = decoded.email;
+            (req as any).clientId = decoded.id;
+            (req as any).clientEmail = decoded.email;
             next();
         });
     },
 
-    isAdmin: (req, res, next) => {
-        client.findByPk(req.clientId)
-            .then( client => {
+    isAdmin: (req: Request, res: Response, next: NextFunction) => {
+        client.findByPk((req as any).clientId)
+            .then( (client: Client): Response | void => {
                 if(!client.roles.includes('ADMIN')){
                     return res.status(401).json({
                         message: "Your status doesn't afford you to access this ressource"
@@ -37,7 +40,7 @@ module.exports = {
                     next();
                 }
             })
-            .catch( err => {
+            .catch( (err: any): Response => {
                 return res.status(500).json({
                     message: err.message
                 });
@@ -45,9 +48,9 @@ module.exports = {
         
     },
 
-    isUser: (req, res, next) => {
-        client.findByPk(req.clientId)
-            .then( client => {
+    isUser: (req: Request, res: Response, next: NextFunction) => {
+        client.findByPk((req as any).clientId)
+            .then( (client: Client): Response | void => {
                 if(!client.roles.includes('USER')){
                     return res.status(401).json({
                         message: "Your are not able to access this ressource"
@@ -57,14 +60,14 @@ module.exports = {
                     next();
                 }
             })
-            .catch( err => res.status(500).json({
+            .catch( (err: any): Response => res.status(500).json({
                     message: err.message
             }));   
     },
 
-    isAccountOwnerOrAdmin: (req, res, next) => {
-        client.findByPk(req.clientId)
-            .then( client => {
+    isAccountOwnerOrAdmin: (req: Request, res: Response, next: NextFunction) => {
+        client.findByPk((req as any).clientId)
+            .then( (client: Client): Response | void => {
                 if(!client.roles.includes('ADMIN') && client.id  !== parseInt(req.params.id)){
                     return res.status(401).json({
                         message: 'You cannot access this ressource'
@@ -73,6 +76,6 @@ module.exports = {
                     next();
                 }
             })
-            .catch( err => res.status(400).json(err));
+            .catch( (err: any): Response => res.status(400).json(err));
     }
 }
