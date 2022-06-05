@@ -1,6 +1,6 @@
 import express from 'express';
 import { eventController } from '../Controllers';
-const { authorizationJwt, file } = require('../Middlewares');
+import { authorizationJwt, file } from '../Middlewares';
 const router = express.Router();
 
 router.get('/', eventController.getAllEvents);

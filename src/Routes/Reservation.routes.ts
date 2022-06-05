@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { reservationController } from "../Controllers";
-const { authorizationJwt, reservationChecking } = require("../Middlewares");
+import { authorizationJwt, reservationChecking } from "../Middlewares";
 
 const router = Router();
 

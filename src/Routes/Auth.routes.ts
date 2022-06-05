@@ -1,7 +1,7 @@
 const router: Router = require('express').Router();
 import { Router } from "express";
 import { authController } from "../Controllers";
-const { verifyClientRegistration, loginVerification, authorizationJwt } = require('../Middlewares');
+import { verifyClientRegistration, loginVerification, authorizationJwt } from '../Middlewares';
 
 router.post(
     '/login', 

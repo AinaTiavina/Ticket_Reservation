@@ -1,6 +1,6 @@
 const router = require('express').Router();
 import { clientController } from '../Controllers';
-const { authorizationJwt } = require('../Middlewares');
+import { authorizationJwt } from '../Middlewares';
 
 router.get(
     '/', 
