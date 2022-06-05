@@ -1,5 +1,5 @@
-const express = require('express');
-const { eventController } = require('../Controllers');
+import express from 'express';
+import { eventController } from '../Controllers';
 const { authorizationJwt, file } = require('../Middlewares');
 const router = express.Router();
 

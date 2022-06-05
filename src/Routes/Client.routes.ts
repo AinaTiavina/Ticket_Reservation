@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { clientController } = require('../Controllers');
+import { clientController } from '../Controllers';
 const { authorizationJwt } = require('../Middlewares');
 
 router.get(
@@ -8,13 +8,15 @@ router.get(
         authorizationJwt.verifyToken,
         authorizationJwt.isAdmin
     ],
-    clientController.retrieveAllClients);
+    clientController.retrieveAllClients
+);
 router.get(
     '/:id', 
     [
         authorizationJwt.verifyToken,
         authorizationJwt.isAccountOwnerOrAdmin
     ],
-    clientController.retrieveOneClient);
+    clientController.retrieveOneClient
+);
 
 module.exports = router;

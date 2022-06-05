@@ -1,5 +1,5 @@
-const { Router } = require("express");
-const { reservationController } = require("../Controllers");
+import { Router } from "express";
+import { reservationController } from "../Controllers";
 const { authorizationJwt, reservationChecking } = require("../Middlewares");
 
 const router = Router();

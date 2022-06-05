@@ -1,4 +1,5 @@
-const router = require('express').Router();
+const router: Router = require('express').Router();
+import { Router } from "express";
 import { authController } from "../Controllers";
 const { verifyClientRegistration, loginVerification, authorizationJwt } = require('../Middlewares');
 
