@@ -18,7 +18,7 @@
 
 ### run the server
 
-    npm start or nodemon start
+    npm start   // or nodemon start
 
 <h2>ABOUT</h2>
 <p>
