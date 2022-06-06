@@ -1,5 +1,25 @@
 <h1 align="center">Ticket Reservation</h1>
 
+<h2>Configuration</h2>
+
+### Install all dependencies
+    
+    npm install
+
+### Configuration of the API
+
+<p> 
+    You can specify the port that you wanna use by adding the PORT = value inside the .env file. The port 3000 will be used as default. 
+</p>
+    
+<p>
+    <img src="configuration.png" alt="API's config reference" />
+</p>
+
+### run the server
+
+    npm start   // or nodemon start
+
 <h2>ABOUT</h2>
 <p>
     This API has a goal to make easy the building of a platform that is used to book a place in an event (i.e Cinema, Concert and many others). As it is an <b>open source</b>project, you are free to contribute or change it to your need.
