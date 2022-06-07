@@ -4,13 +4,13 @@ import { reservation } from './Reservation.model';
 
 client.hasMany(reservation, {
     
-    foreignKey: 'clientId',
+    foreignKey: 'ClientId',
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE'
 });
 
 event.hasMany(reservation, {    
-    foreignKey: 'eventId',
+    foreignKey: 'EventId',
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE'
 });
