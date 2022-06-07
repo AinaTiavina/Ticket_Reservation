@@ -1,6 +1,6 @@
 <h1 align="center">Ticket Reservation</h1>
 
-<h2>Configuration</h2>
+<h2>SETUP</h2>
 
 ### Install all dependencies
     
