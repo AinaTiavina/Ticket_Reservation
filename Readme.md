@@ -18,7 +18,7 @@
 
 ### run the server
 
-    npm start   // or nodemon start
+    npm start   # or nodemon start
 
 <h2>ABOUT</h2>
 <p>
@@ -97,6 +97,6 @@
         "name": "John Doe"      // optional
     }
 
-### NB: The event entity uses a multipart for data.
+### NB: The event entity uses a multipart-form-data.
 
 ### If you have a glitch, contact me.
