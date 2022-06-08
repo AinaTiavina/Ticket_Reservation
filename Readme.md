@@ -59,6 +59,7 @@
         "lastName": "John",
         "firstName": "Doe",
         "email": "johnDoe@gmail.com",
+        "roles": "USER;ADMIN",      // optional
         "password": "password",
         "phone": "0343434334",
         "cardNumber": "4242424142424242"
