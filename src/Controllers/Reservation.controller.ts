@@ -12,7 +12,13 @@ export const reservationController = {
         const condition = req.query.isPayed && { payed: req.query.isPayed }
 
         reservation.findAll({
-            where: condition        
+            where: condition,
+            include: {
+                model: client,
+                attributes: {
+                    exclude: "password"
+                },
+            }        
         })
         .then( (reservations: Reservation): Response => res.status(200).json(reservations))
         .catch( (err: ConnectionError) => res.status(500).json(err));
