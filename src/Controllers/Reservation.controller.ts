@@ -9,11 +9,11 @@ const stripe = require('stripe')(process.env.STRIPE_API_KEY);
 export const reservationController = {
 
     fetchAllReservations: (req: Request, res: Response, next: NextFunction) => {
-        const condition = req.query.isPayed ? {
-            where: { payed: req.query.isPayed }
-        } : {}
+        const condition = req.query.isPayed ? { payed: req.query.isPayed } : {}
 
-        reservation.findAll(condition)
+        reservation.findAll({
+            where: condition        
+        })
         .then( (reservations: Reservation): Response => res.status(200).json(reservations))
         .catch( (err: ConnectionError) => res.status(500).json(err));
     },
