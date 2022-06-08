@@ -9,6 +9,8 @@ client.hasMany(reservation, {
     onUpdate: 'CASCADE'
 });
 
+reservation.belongsTo(client)
+
 event.hasMany(reservation, {    
     foreignKey: 'EventId',
     onDelete: 'CASCADE',
