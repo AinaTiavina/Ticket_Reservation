@@ -14,9 +14,13 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 // configure a static path
 app.use(express.static(__dirname+'/public'));
 
-(async () => {
-    await sequelize.sync({alter: false, force: false})
-});
+sequelize.sync({alter: false, force: true})
+    .then(() => {
+        console.log('synchronized successfully');
+    })
+    .catch((err: Error) => {
+        console.log('error: '+ err);
+    })
 
 app.use(express.json());
 
