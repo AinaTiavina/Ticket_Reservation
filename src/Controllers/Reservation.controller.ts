@@ -45,7 +45,7 @@ export const reservationController = {
             .catch( (err: TypeError): Response => res.status(400).json(err) )
     },
 
-    reservationPayment: (req: Request, res: Response, next: NextFunction) => {
+    reservationPaymentWithStripe: (req: Request, res: Response, next: NextFunction) => {
 
         reservation.findByPk(req.params.id)
             .then( (_reservation: Reservation): void => {

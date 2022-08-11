@@ -25,7 +25,9 @@ router.post(
         authorizationJwt.verifyToken,
         reservationChecking.isAlreadyPayed
     ],
-    reservationController.reservationPayment
-)
+    reservationController.reservationPaymentWithStripe
+);
+
+
 
 module.exports = router;
