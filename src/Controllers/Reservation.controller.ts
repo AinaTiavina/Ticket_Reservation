@@ -2,6 +2,7 @@ require('dotenv').config();
 import { NextFunction, Request, Response } from "express";
 import { ConnectionError, Error } from "sequelize/types";
 import { Client, Event, Reservation } from "../Types";
+import paypal from "@paypal/checkout-server-sdk";
 const { reservation, event, client } = require('../Models');
 const sendTicket = require('../Services/sendTicket.service');
 const stripe = require('stripe')(process.env.STRIPE_API_KEY);
@@ -87,5 +88,27 @@ export const reservationController = {
                     }
                 })
             })
+    },
+
+    reservationPaymentWithPaypal: async(req: Request, res: Response, next: NextFunction) => {
+        const env = new paypal.core.SandboxEnvironment(process.env.CLIENT_ID as string, process.env.CLIENT_SECRET as string);
+        const client = new paypal.core.PayPalHttpClient(env);
+        const request = new paypal.orders.OrdersCreateRequest;
+        const reserv = await reservation.findByPk(req.params.id, {
+            include: {
+                model: event
+            }      
+        });
+        request.requestBody({
+            "intent": "CAPTURE",
+            "purchase_units": [
+                {
+                    "amount": {
+                        "currency_code": "USD",
+                        "value": reserv.Event.cost
+                    }
+                }
+            ]
+        })
     }
 }
