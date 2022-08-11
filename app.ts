@@ -14,7 +14,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 // configure a static path
 app.use(express.static(__dirname+'/public'));
 
-sequelize.sync({alter: false, force: false})
+sequelize.sync({alter: false, force: true})
     .then(() => {
         console.log('synchronized successfully');
     })
