@@ -54,8 +54,7 @@ export const event = db.define('Event', {
         type: DataTypes.DATE,
         allowNull: false,
         validate: {
-            notEmpty: true,
-            isDate: true
+            notEmpty: true
         },
         get(){
             return moment(this.getDataValue('dateEvent')).format('dddd Do MMMM YYYY');

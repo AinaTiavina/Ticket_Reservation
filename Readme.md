@@ -43,7 +43,7 @@
 |  | `/refreshToken` | **POST** | To obtain a new token without log in | **USER** |
 | *Reservation* | `/api/reservations?isPayed=true/false(optional)` | **GET** | Fetch all reservations | **ADMIN;OWNER** |
 | | `/api/reservations?event=🆔` | **POST** | Save a reservation which relates to the specified event | **USER** |
-| | `/api/reservations/🆔/payment` | **POST** | Pay the reservation | **OWNER** | 
+| | `/api/reservations/🆔/payment/stripe` | **POST** | Pay the reservation | **OWNER** | 
 
 ### NB: The blank value inside the Access column means that everyone can access the ressources.
 
