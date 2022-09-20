@@ -4,6 +4,7 @@ import { authController } from "../Controllers";
 import { verifyClientRegistration, loginVerification, authorizationJwt } from '../Middlewares';
 import passport from 'passport';
 import "../Controllers/oAuth.controller";
+import { JwtGenerator } from "../Controllers/jwtGenerator";
 
 router.post(
     '/login', 
@@ -34,9 +35,8 @@ router.get(
 );
 router.get(
     '/auth/google/callback',
-    passport.authenticate( 'google', {
-        successRedirect: '/auth/google/success',
-        failureRedirect: '/auth/google/failure'
-}));
+    passport.authenticate('google', { session: false }),
+    JwtGenerator.generate
+);
 
 module.exports = router;

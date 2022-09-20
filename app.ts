@@ -1,7 +1,6 @@
 import express from "express";
 import passport from "passport";
 const { clientRoutes, eventRoutes, authenticationRoutes, reservationRoutes } = require('./src/Routes')
-const sequelize = require('./src/Services/database.service');
 const app = express();
 const cors = require('cors');
 
@@ -14,14 +13,6 @@ app.use(cors(corsOptions));
 app.use(passport.initialize());
 // configure a static path
 app.use(express.static(__dirname+'/public'));
-
-sequelize.sync({alter: false, force: true})
-    .then(() => {
-        console.log('synchronized successfully');
-    })
-    .catch((err: Error) => {
-        console.log('error: '+ err);
-    })
 
 app.use(express.json());
 

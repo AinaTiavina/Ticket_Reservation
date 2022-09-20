@@ -12,7 +12,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(obj: any, done) {
-  done(null, obj);
+    done(null, obj);
 });
 
 passport.use(new GoogleStrategy({
@@ -20,6 +20,19 @@ passport.use(new GoogleStrategy({
         clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
         callbackURL: process.env.GOOGLE_CALLBACK_URL as string
     }, function verify(accessToken, refreshToken, profile, cb) {
-        console.log(profile);
+        client.findOne({
+            attributes: {
+                exclude: 'password'
+            },
+            where: {
+                email: profile.email
+            }
+        })
+        .then((user: any) => {
+            cb(null, user);
+        })
+        .catch((err: any) => {
+            cb(err);
+        })
     }
 ));
