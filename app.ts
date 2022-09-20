@@ -4,24 +4,15 @@ const { clientRoutes, eventRoutes, authenticationRoutes, reservationRoutes } = r
 const app = express();
 const cors = require('cors');
 
-const cors = require('cors');
 const corsOptions ={
     origin:'http://localhost:3000', 
     credentials:true,            // access-control-allow-credentials:true
     optionSuccessStatus:200
 }
 app.use(cors(corsOptions));
-
+app.use(passport.initialize());
 // configure a static path
 app.use(express.static(__dirname+'/public'));
-
-sequelize.sync({alter: false, force: true})
-    .then(() => {
-        console.log('synchronized successfully');
-    })
-    .catch((err: Error) => {
-        console.log('error: '+ err);
-    })
 
 app.use(express.json());
 
