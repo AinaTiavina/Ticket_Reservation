@@ -1,8 +1,8 @@
-import { NextFunction, Request, Response } from "express";
-const express = require('express');
+import express from "express";
+import passport from "passport";
 const { clientRoutes, eventRoutes, authenticationRoutes, reservationRoutes } = require('./src/Routes')
-const sequelize = require('./src/Services/database.service');
 const app = express();
+const cors = require('cors');
 
 const cors = require('cors');
 const corsOptions ={
