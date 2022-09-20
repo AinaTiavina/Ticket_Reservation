@@ -4,7 +4,7 @@
 
 ### Install all dependencies
     
-    npm install
+    yarn install
 
 ### Configuration of the API
 
