@@ -98,6 +98,4 @@
         "name": "John Doe"      // optional
     }
 
-### NB: The event entity uses a multipart-form-data.
-
-### If you have a glitch, contact me.
+## NB: The event entity uses a multipart-form-data.
